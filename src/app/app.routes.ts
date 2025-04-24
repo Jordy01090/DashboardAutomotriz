@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
 import { PrincipalComponent } from './principal/principal.component';
 import { CabeceraComponent } from './cabecera/cabecera.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {
       path: '', component: PrincipalComponent
     },
     {
-        path: 'contacto',
-        component: CabeceraComponent
+        path: 'login',
+        component: LoginComponent
       },
   ];

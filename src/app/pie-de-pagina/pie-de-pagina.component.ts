@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './pie-de-pagina.component.css'
 })
 export class PieDePaginaComponent {
-
+  currentYear: number = new Date().getFullYear();
 }

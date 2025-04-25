@@ -28,9 +28,17 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    /*console.log('Botón presionado');
     if (this.loginForm.valid) {
-      console.log('Login:', this.loginForm.value);
-      alert('Se procederá a validar las credenciales de acceso');
-    }
+      console.log('Formulario válido');
+      alert('Estamos validando tus credenciales');
+    } else {
+      console.log('Formulario inválido');
+      alert('Formato de correo inválido')
+    }*/
+    alert('Se procederá a validar las credenciales de Acceso')
+
   }
+  
 }
+

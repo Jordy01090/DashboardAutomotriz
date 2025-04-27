@@ -1,17 +1,22 @@
+<!-- cabecera.component.html -->
 <mat-toolbar class="toolbar">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>Automotriz Pepito</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-      
-    </button>
-    <button mat-button>Acerca de</button>
-    <button mat-raised-button>Iniciar Sesion</button>
-  </mat-toolbar>
-  
+  <button mat-icon-button aria-label="Menú">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Automotriz Pepito</span>
+
+  <!-- Mensaje solo cuando esté logueado -->
+  <span *ngIf="isLoggedIn" class="bienvenida">
+    Bienvenido {{ usuario }}
+  </span>
+
+  <span class="spacer"></span>
+
+  <!-- Botón iniciar o cerrar según estado -->
+  <button mat-button *ngIf="!isLoggedIn" (click)="irALogin()">
+    Iniciar Sesión
+  </button>
+  <button mat-button color="warn" *ngIf="isLoggedIn" (click)="cerrarSesion()">
+    Cerrar Sesión
+  </button>
+</mat-toolbar>

@@ -3,13 +3,14 @@ import { PrincipalComponent } from './principal/principal.component';
 import { CabeceraComponent } from './cabecera/cabecera.component';
 import { LoginComponent } from './login/login.component';
 
-export const routes: Routes = [
+export const routes: Routes = [ 
     
       { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'principal',  component: PrincipalComponent },
 
-      //path: '', component: PrincipalComponent, 
     {
         path: 'login',
         component: LoginComponent
       },
   ];
+  

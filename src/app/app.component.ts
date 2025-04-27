@@ -6,10 +6,13 @@ import { PrincipalComponent } from './principal/principal.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CabeceraComponent, PieDePaginaComponent],
+  imports: [RouterOutlet, CabeceraComponent, PieDePaginaComponent, PrincipalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
+
+
 export class AppComponent {
   title = 'AutomotrizJ';
 }

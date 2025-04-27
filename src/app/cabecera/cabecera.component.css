@@ -1,9 +1,28 @@
 .toolbar{
     position: fixed;
-    
+    top: 0;
+    left: 0;
+    right: 0;
 }
 .example-spacer {
     flex: 1 1 auto;
   }
 
+  /* cabecera.component.css */
+.toolbar {
+    position: fixed;
+    top: 0;
+    left: 0; right: 0;
+    height: 64px;
+    z-index: 1000;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .bienvenida {
+    margin-left: 1rem;
+  }
+  
   

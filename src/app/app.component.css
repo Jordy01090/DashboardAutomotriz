@@ -1,19 +1,18 @@
 .contenido-principal {
     padding-top: 64px; /* mismo valor que la altura de la toolbar */
     flex: 1;            /* ocupa todo el espacio sobrante */
-    
+
 }
  /* html, body {
     height: 100%;
     margin: 0;
   }
-  
+
   :host {
     display: flex;
     flex-direction: column;
     min-height: 100vh;   /* 100 % de la ventana */
-  
-  
 
-  
-  
+
+
+

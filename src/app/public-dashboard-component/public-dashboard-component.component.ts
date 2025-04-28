@@ -16,11 +16,13 @@ import { PieDePaginaComponent } from '../pie-de-pagina/pie-de-pagina.component';
   `,
   styles: [
     `
+      .layout-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
       .content {
-        min-height: calc(
-          100vh - 150px
-        ); /* Ajusta según altura de cabecera y pie */
-        padding: 20px;
+        flex: 1;
       }
     `,
   ],

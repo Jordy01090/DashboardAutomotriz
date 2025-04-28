@@ -1,4 +1,97 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-background: #1E1E2F;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  --color-card-bg: #2A2A40;
+
+  --color-text-primary: #FFFFFF;
+
+  --color-text-secondary: #B0B0C3;
+
+
+
+  --color-primary: #4D8AFF;
+  --color-secondary: #4CE19E;
+
+  --color-danger: #FF5C5C;
+  --color-warning: #FFC857;
+  --color-success: #3FC1C9;
+  --color-primary-light: rgba(77, 138, 255, 0.2);
+  --color-secondary-light: rgba(76, 225, 158, 0.2);
+  --color-danger-light: rgba(255, 92, 92, 0.2);
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --border-radius: 8px;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  margin: 0;
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-light {
+  color: var(--color-text-secondary);
+}
+
+.bg-card {
+  background-color: var(--color-card-bg);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-danger {
+  background-color: var(--color-danger);
+}
+
+.bg-warning {
+  background-color: var(--color-warning);
+}
+
+.bg-success {
+  background-color: var(--color-success);
+}
+
+.dashboard-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}

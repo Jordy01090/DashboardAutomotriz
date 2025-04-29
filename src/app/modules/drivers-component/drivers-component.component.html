@@ -1,1 +1,92 @@
-<p>Welcome</p>
+<div class="drivers-container">
+  <h2 class="p-header">Gestión de Conductores</h2>
+  <p class="estudiante-info">Estudiante: Angel Zambrano</p>
+  <!-- <div class="search-filter-container">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar conductor..." [(ngModel)]="searchText" (keyup)="aplicaFiltro()">
+      <button><i class="fas fa-search"></i> Buscar</button>
+    </div>
+    <div class="filters">
+      <select title="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+      <select title="Filtrar por tipo de licencia" >
+        <option value="">Todos los tipos de licencia</option>
+        <option value="A">Tipo A</option>
+        <option value="B">Tipo B</option>
+        <option value="C">Tipo C</option>
+      </select>
+    </div>
+  </div> -->
+  <div class="acciones">
+      <button mat-raised-button color="primary">
+        <mat-icon>add</mat-icon>
+        Registrar Conductor
+      </button>
+  </div>
+  <div class="table-responsive">
+    <table class="drivers-table">
+      <thead class="table-header">
+        <tr>
+          <th >ID <i class="fas fa-sort"></i></th>
+          <th >Nombre <i class="fas fa-sort"></i></th>
+          <th>Licencia</th>
+          <th >Contacto <i class="fas fa-sort"></i></th>
+          <th >Estado <i class="fas fa-sort"></i></th>
+          <th >Evaluación <i class="fas fa-sort"></i></th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of conductores">
+          <td>{{ driver.id }}</td>
+          <td>{{ driver.name }}</td>
+          <td>
+            <div class="license-info">
+              <span class="license-type">{{ driver.license.type }}</span>
+              <span class="license-date">Exp: {{ driver.license.expDate | date:'dd/MM/yyyy' }}</span>
+            </div>
+          </td>
+          <td>{{ driver.email }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="{'active': driver.status === 'activo', 'inactive': driver.status === 'inactivo'}">
+              {{ driver.status }}
+            </span>
+          </td>
+          <td>
+            <div class="rating">
+              <i *ngFor="let star of [1, 2, 3, 4, 5]"
+                 class="fas"
+                 [ngClass]="{'fa-star': star <= driver.rating, 'fa-star-o': star > driver.rating}"></i>
+              <span>({{ driver.rating }})</span>
+            </div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button class="edit-btn" mat-icon-button color="accent">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="delete-btn" mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="false" >
+          <td colspan="7" class="no-data">No se encontraron conductores que coincidan con tu búsqueda</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <button title="Página anterior">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <span>Pagina 1 de 10</span>
+    <button title="pagina siguiente" >
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

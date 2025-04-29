@@ -1,0 +1,47 @@
+.vehiculos-container {
+  padding: 20px;
+  background-color: var(--color-background, #1a1a2e); /* Color por defecto si no hay variable */
+  min-height: 100vh;
+}
+
+.vehiculos-container h1 {
+  font-size: 28px;
+  color: var(--color-primary, #2979ff);
+}
+
+.estudiante-info {
+  margin-top: 8px;
+  font-style: italic;
+  color: gray;
+}
+
+.acciones {
+  margin: 16px 0;
+}
+
+.tabla-vehiculos {
+  overflow-x: auto; /* Para que en móvil se pueda hacer scroll */
+}
+
+table {
+  width: 100%;
+  min-width: 600px; /* Evita que se rompa en pantallas pequeñas */
+}
+
+.mat-header-cell, .mat-cell {
+  text-align: center;
+}
+
+.acciones button {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 24px;
+  font-weight: bold;
+}
+
+.acciones-botones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 4px 0;
+}

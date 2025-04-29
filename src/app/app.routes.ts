@@ -32,9 +32,11 @@ export const routes: Routes = [
           {
             path:'conductores',
             loadComponent:()=>import('./modules/drivers-component/drivers-component.component').then(m=>m.DriversComponentComponent)
-          }
-
-
+          },
+          {
+            path:'vehiculos',
+            loadComponent:()=>import('./modules/vehiculos-component/vehiculos-component.component').then(m=>m.VehiculosComponentComponent)
+          },
         ]
       }
 

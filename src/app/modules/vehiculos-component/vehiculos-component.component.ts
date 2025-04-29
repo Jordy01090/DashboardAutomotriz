@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
   templateUrl: './vehiculos-component.component.html',
-  styleUrl: './vehiculos-component.component.css'
+  styleUrls: ['./vehiculos-component.component.css']
 })
 export class VehiculosComponentComponent {
   vehiculos = [

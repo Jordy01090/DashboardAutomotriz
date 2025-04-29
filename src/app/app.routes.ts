@@ -34,6 +34,10 @@ export const routes: Routes = [
             loadComponent:()=>import('./modules/drivers-component/drivers-component.component').then(m=>m.DriversComponentComponent)
           },
           {
+            path:'ubicacion',
+            loadComponent:()=>import('./modules/location-component/location-component.component').then(m=>m.LocationComponent)
+          },
+          {
             path:'vehiculos',
             loadComponent:()=>import('./modules/vehiculos-component/vehiculos-component.component').then(m=>m.VehiculosComponentComponent)
           },

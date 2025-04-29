@@ -1,0 +1,68 @@
+<div class="reportes-container">
+    <h1 class="titulo">Análisis de Flota - KPIs</h1>
+    <div class="filtros-container">
+        <mat-form-field appearance="fill" class="filtro">
+          <mat-label>Mes</mat-label>
+          <mat-select>
+            <mat-option value="enero">Enero</mat-option>
+            <mat-option value="febrero">Febrero</mat-option>
+            <mat-option value="marzo">Marzo</mat-option>
+            <mat-option value="abril">Abril</mat-option>
+            <mat-option value="mayo">Mayo</mat-option>
+            <mat-option value="junio">Junio</mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="filtro">
+          <mat-label>Tipo de Vehículo</mat-label>
+          <mat-select>
+            <mat-option value="camion">Camión</mat-option>
+            <mat-option value="automovil">Automóvil</mat-option>
+            <mat-option value="motocicleta">Motocicleta</mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <mat-form-field appearance="fill" class="filtro">
+          <mat-label>Estado</mat-label>
+          <mat-select>
+            <mat-option value="activo">Activo</mat-option>
+            <mat-option value="mantenimiento">Mantenimiento</mat-option>
+            <mat-option value="inactivo">Inactivo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <button mat-raised-button color="primary" disabled>Aplicar Filtros</button>
+      </div>
+      
+    <div class="kpis-grid">
+        
+      <div class="kpi-card">
+        <h3>Kilómetros Recorridos</h3>
+        <p class="valor">🚚 8.530 km</p>
+        <span class="detalle">Promedio mensual</span>
+      </div>
+      <div class="kpi-card">
+        <h3>Costo Mantenimiento</h3>
+        <p class="valor">🔧 $460</p>
+        <span class="detalle">Últimos 30 días</span>
+      </div>
+      <div class="kpi-card">
+        <h3>Tiempo entre Mantenimientos</h3>
+        <p class="valor">📆 45 días</p>
+        <span class="detalle">Promedio general</span>
+      </div>
+      <div class="kpi-card">
+        <h3>Vehículo más eficiente</h3>
+        <p class="valor">🏆 ABC-1234</p>
+        <span class="detalle">95% eficiencia</span>
+      </div>
+    </div>
+  
+    <div class="grafico-section">
+      <h2>Comparativa de Costos</h2>
+      <img src="https://dummyimage.com/800x300/2c2c2c/ffffff&text=Gráfico+de+Barras+Simulado" alt="Gráfico de barras simulado">
+
+      <p class="nota">* Imagen de ejemplo para presentación visual</p>
+    </div>
+  </div>
+  

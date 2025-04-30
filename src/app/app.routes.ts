@@ -34,13 +34,22 @@ export const routes: Routes = [
             loadComponent:()=>import('./modules/drivers-component/drivers-component.component').then(m=>m.DriversComponentComponent)
           },
           {
+            path:'ubicacion',
+            loadComponent:()=>import('./modules/location-component/location-component.component').then(m=>m.LocationComponent)
+          },
+          {
             path:'vehiculos',
             loadComponent:()=>import('./modules/vehiculos-component/vehiculos-component.component').then(m=>m.VehiculosComponentComponent)
           },
           {
             path:'mantenimiento',
             loadComponent:()=>import('./modules/mantenimiento/lista-mantenimientos/lista-mantenimientos.component').then(m=>m.ListaMantenimientosComponent)
-          },
+          },{
+            path:'reportes',
+            loadComponent:()=>import('./modules/reportes-component/reportes-component.component').then(m=>m.ReportesComponentComponent)
+          }
+            
+          
         ]
       }
 

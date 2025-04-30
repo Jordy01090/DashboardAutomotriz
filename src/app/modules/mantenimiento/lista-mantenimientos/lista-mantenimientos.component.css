@@ -1,0 +1,62 @@
+.mantenimientos-container {
+    padding: 20px;
+  }
+  
+  .p-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4D8AFF;
+  }
+  
+  .estudiante-info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .acciones {
+    margin-bottom: 20px;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .mantenimientos-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .mantenimientos-table th, .mantenimientos-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .table-header th {
+    background-color: #135a94;
+    font-weight: bold;
+  }
+  
+  .no-data {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  

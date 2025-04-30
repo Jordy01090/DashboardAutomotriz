@@ -1,0 +1,64 @@
+<div class="mantenimientos-container">
+    <h2 class="p-header">Gestión de Mantenimientos</h2>
+    <p class="estudiante-info">Estudiante: Julio Avila</p>
+  
+    <div class="acciones">
+      <button mat-raised-button color="primary">
+        <mat-icon>add</mat-icon>
+        Registrar Mantenimiento
+      </button>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="mantenimientos-table">
+        <thead class="table-header">
+          <tr>
+            <th>ID <i class="fas fa-sort"></i></th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Fecha <i class="fas fa-sort"></i></th>
+            <th>Costo</th>
+            <th>Kilometraje</th>
+            <th>Vehículo ID</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mantenimiento of mantenimientos">
+            <td>{{ mantenimiento.id }}</td>
+            <td>{{ mantenimiento.tipo }}</td>
+            <td>{{ mantenimiento.descripcion }}</td>
+            <td>{{ mantenimiento.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>{{ mantenimiento.costo | currency }}</td>
+            <td>{{ mantenimiento.kilometraje }}</td>
+            <td>{{ mantenimiento.vehiculoId }}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit-btn" mat-icon-button color="accent">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button class="delete-btn" mat-icon-button color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="mantenimientos.length === 0">
+            <td colspan="8" class="no-data">No se encontraron registros de mantenimiento.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="pagination">
+      <button title="Página anterior">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span>Página 1 de 5</span>
+      <button title="Página siguiente">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+  
+  

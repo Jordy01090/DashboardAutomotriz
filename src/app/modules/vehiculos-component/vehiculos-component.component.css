@@ -1,6 +1,6 @@
 .vehiculos-container {
   padding: 20px;
-  background-color: var(--color-background, #1a1a2e); /* Color por defecto si no hay variable */
+  background-color: var(--color-background, #1a1a2e);
   min-height: 100vh;
 }
 
@@ -20,12 +20,12 @@
 }
 
 .tabla-vehiculos {
-  overflow-x: auto; /* Para que en móvil se pueda hacer scroll */
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
-  min-width: 600px; /* Evita que se rompa en pantallas pequeñas */
+  min-width: 600px;
 }
 
 .mat-header-cell, .mat-cell {
@@ -44,4 +44,8 @@ table {
   justify-content: center;
   gap: 12px;
   padding: 4px 0;
+}
+
+mat-form-field {
+  width: 400px;
 }

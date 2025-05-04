@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+//import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -10,6 +11,7 @@ import { ListaMantenimientosComponent } from './lista-mantenimientos/lista-mante
 @NgModule({
   declarations: [ ],
   imports: [
+   // BrowserModule,
     CommonModule,
     MatTableModule,
     MatCardModule,

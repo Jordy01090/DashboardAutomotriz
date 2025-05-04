@@ -3,13 +3,12 @@
     <p class="estudiante-info">Estudiante: Julio Avila</p>
   
     <div class="acciones">
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" (click)="crearMantenimiento()">
         <mat-icon>add</mat-icon>
         Registrar Mantenimiento
       </button>
     </div>
-  
-    <div class="table-responsive">
+    <input class="fecha-busqueda-input" type="date" [(ngModel)]="busqueda" (input)="actualizarFiltro()" placeholder="Buscar por fecha" />    <div class="table-responsive">
       <table class="mantenimientos-table">
         <thead class="table-header">
           <tr>
@@ -24,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let mantenimiento of mantenimientos">
+          <tr *ngFor="let mantenimiento of mantenimientosFiltrados">
             <td>{{ mantenimiento.id }}</td>
             <td>{{ mantenimiento.tipo }}</td>
             <td>{{ mantenimiento.descripcion }}</td>
@@ -34,10 +33,10 @@
             <td>{{ mantenimiento.vehiculoId }}</td>
             <td>
               <div class="action-buttons">
-                <button class="edit-btn" mat-icon-button color="accent">
+                <button class="edit-btn" mat-icon-button color="accent" (click)="editarMantenimiento(mantenimiento)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button class="delete-btn" mat-icon-button color="warn">
+                <button class="delete-btn" mat-icon-button color="warn" (click)="eliminarMantenimiento(mantenimiento.id)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

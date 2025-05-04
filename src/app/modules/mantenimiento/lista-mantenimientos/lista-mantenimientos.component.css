@@ -58,5 +58,22 @@
     margin-top: 20px;
     gap: 10px;
   }
+/* Estilos para el input de búsqueda */
+.fecha-busqueda-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  width: 250px;
+  margin: 8px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fecha-busqueda-input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 6px rgba(25, 118, 210, 0.5);
+  outline: none;
+}
   
   

@@ -1,0 +1,35 @@
+/* Estilo general del formulario */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  /* Título del formulario */
+  .form-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Fila de campos */
+  .form-row {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+  }
+  
+  /* Campos individuales */
+  .form-field {
+    flex: 1;
+  }
+  
+  /* Botones */
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 16px;
+  }

@@ -1,1 +1,43 @@
-<p>crear-mantenimiento works!</p>
+<h2 class="form-title">{{ data ? 'Editar Mantenimiento' : 'Crear Mantenimiento' }}</h2>
+<form class="form-container">
+  <div class="form-row">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Tipo</mat-label>
+      <input matInput [(ngModel)]="mantenimiento.tipo" name="tipo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Descripción</mat-label>
+      <input matInput [(ngModel)]="mantenimiento.descripcion" name="descripcion" />
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Fecha</mat-label>
+      <input matInput type="date" [(ngModel)]="mantenimiento.fecha" name="fecha" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Costo</mat-label>
+      <input matInput type="number" [(ngModel)]="mantenimiento.costo" name="costo" />
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Kilometraje</mat-label>
+      <input matInput type="number" [(ngModel)]="mantenimiento.kilometraje" name="kilometraje" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Vehículo ID</mat-label>
+      <input matInput type="number" [(ngModel)]="mantenimiento.vehiculoId" name="vehiculoId" />
+    </mat-form-field>
+  </div>
+
+  <div class="modal-actions">
+    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+    <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+  </div>
+</form>

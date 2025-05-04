@@ -5,6 +5,10 @@ import { Driver } from './interfaces/driver';
 import { filter } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { DriversService } from '../../services/drivers.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarEliminarDialogComponent } from '@app/modals/confirmar-eliminar-dialog/confirmar-eliminar-dialog.component';
+import { EditDriverComponent } from '@app/modals/edit-driver/edit-driver.component';
 
 @Component({
   selector: 'app-drivers-component',
@@ -15,14 +19,66 @@ import { MatButtonModule } from '@angular/material/button';
 export class DriversComponentComponent implements OnInit {
   conductores: Driver[] = [];
   conductoresFiltrados: Driver[] = [];
+  private dialog:MatDialog;
 
   searchText: string = '';
   estadoFiltro: string = '';
   licenciaFiltro: string = '';
+  private driverService: DriversService;
 
   columnaOrdenacion = 'id';
   ordenDireccion = 'asc';
-  constructor() {}
+  constructor(driverService:DriversService,dialog:MatDialog) {
+    this.dialog = dialog;
+    this.driverService = driverService;
+  }
+  editarConductor(conductor:Driver){
+    const dialogRef = this.dialog.open(EditDriverComponent,{
+      data:conductor,
+      width:'400px',
+    })
+
+    dialogRef.afterClosed().subscribe((resultado)=>{
+      if(resultado){
+        console.log(resultado);
+        let driver:Driver = this.parseDriver(resultado);
+
+        this.conductores = this.driverService.editarConductor(this.conductores,driver);
+        this.conductoresFiltrados = this.driverService.editarConductor(this.conductoresFiltrados,driver);
+        this.aplicarFiltros();
+      }
+    })
+  }
+
+  private parseDriver(data:any):Driver{
+    return {
+
+      id:data.id,
+      name:data.name,
+      license:{
+        type:data.license,
+        expDate:data.expDate,
+      },
+      email:data.email,
+      status:data.status,
+      rating:data.rating,
+    }
+  }
+
+  eliminarConductor(conductor:Driver){
+    const dialogRef = this.dialog.open(ConfirmarEliminarDialogComponent,{
+      data:{
+        mensaje:`¿Está seguro de que desea eliminar al conductor ${conductor.name}?`,
+      }
+    })
+    dialogRef.afterClosed().subscribe((resultado)=>{
+      if(resultado){
+        this.conductores = this.driverService.eliminarConductor(this.conductores,conductor.id);
+        this.conductoresFiltrados = this.driverService.eliminarConductor(this.conductoresFiltrados,conductor.id);
+        this.aplicarFiltros();
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.cargaConductores();
@@ -53,80 +109,56 @@ export class DriversComponentComponent implements OnInit {
         status: 'inactivo',
         rating: 3,
       },
+      {
+        id: 4,
+        name: 'Angel  Zambrano',
+        license: { type: 'C', expDate: new Date('2023-08-10') },
+        email: 'angeldanielz@example.com',
+        status: 'inactivo',
+        rating: 3,
+      },
+      {
+        id: 5,
+        name: 'Juan Suarex',
+        license: { type: 'B', expDate: new Date('2023-08-10') },
+        email: 'juanrex@example.com',
+        status: 'activo',
+        rating: 5,
+      },
     ];
+    this.conductoresFiltrados = this.conductores;
   }
 
-  aplicaFiltro(): void {
-    let filtro = this.conductores;
+ aplicarFiltros(){
+  let resultado = this.conductores;
 
-    if (this.searchText) {
-      const text = this.searchText.toLowerCase();
-      filtro = filtro.filter(
-        (c) =>
-          c.name.toLowerCase().includes(text) ||
-          c.email.toLowerCase().includes(text) ||
-          c.id.toString().includes(text)
-      );
-    }
-
-    if (this.estadoFiltro) {
-      filtro = filtro.filter((c) => c.status === this.estadoFiltro);
-    }
-
-    if (this.licenciaFiltro) {
-      filtro = filtro.filter((c) => c.license?.type === this.licenciaFiltro);
-    }
-
-    filtro = this.ordenar(filtro);
-    // this.conductoresFiltrados = this.paginador(filtro);
-    // this.actualizarTotalPaginas(filtro.length);
+  if(this.estadoFiltro!==''){
+    resultado = this.driverService.filtrarConductoresPorEstado(resultado,this.estadoFiltro);
+  }
+  if(this.searchText!==''){
+    resultado = this.driverService.bucarConductoresPorNombre(resultado,this.searchText);
+  }
+  if(this.licenciaFiltro!==''){
+    resultado = this.driverService.filtrarPorLicencia(resultado,this.licenciaFiltro);
   }
 
-  ordenarTabla(column: string): void {
-    if (this.columnaOrdenacion === column) {
-      this.ordenDireccion = this.ordenDireccion === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.columnaOrdenacion = column;
-      this.ordenDireccion = 'asc';
-    }
-    this.aplicaFiltro();
-  }
+  this.conductoresFiltrados = resultado;
+ }
+ filtrarPorEstado(){
+  this.aplicarFiltros();
+ }
 
-  ordenar(conductores: Driver[]): Driver[] {
-    return [...conductores].sort((a, b) => {
-      let aValor: any = null;
-      let bValor: any = null;
+ filtrarPorNombre(){
+  this.aplicarFiltros();
+ }
+ filtrarPorLicencia(){
+  this.aplicarFiltros();
+ }
 
-      switch (this.columnaOrdenacion) {
-        case 'id':
-          aValor = a.id;
-          bValor = b.id;
-          break;
-        case 'name':
-          aValor = a.name.toLowerCase();
-          bValor = b.name.toLowerCase();
-          break;
-        case 'email':
-          aValor = a.email.toLowerCase();
-          bValor = b.email.toLowerCase();
-          break;
-        case 'status':
-          aValor = a.status.toLowerCase();
-          bValor = b.status.toLowerCase();
-          break;
-        case 'rating':
-          aValor = a.rating;
-          bValor = b.rating;
-          break;
-
-        default:
-          aValor = a.id;
-          bValor = b.id;
-          break;
-      }
-
-      const comparacion = aValor > bValor ? 1 : aValor < bValor ? -1 : 0;
-      return this.ordenDireccion === 'asc' ? comparacion : -comparacion;
-    });
-  }
+ limpiarFiltros(){
+  this.estadoFiltro = '';
+  this.searchText = '';
+  this.licenciaFiltro = '';
+  this.aplicarFiltros();
+ }
 }

@@ -1,31 +1,35 @@
 <div class="drivers-container">
   <h2 class="p-header">Gestión de Conductores</h2>
   <p class="estudiante-info">Estudiante: Angel Zambrano</p>
-  <!-- <div class="search-filter-container">
-    <div class="search-box">
-      <input type="text" placeholder="Buscar conductor..." [(ngModel)]="searchText" (keyup)="aplicaFiltro()">
-      <button><i class="fas fa-search"></i> Buscar</button>
-    </div>
-    <div class="filters">
-      <select title="Filtrar por estado">
-        <option value="">Todos los estados</option>
-        <option value="activo">Activo</option>
-        <option value="inactivo">Inactivo</option>
-      </select>
-      <select title="Filtrar por tipo de licencia" >
-        <option value="">Todos los tipos de licencia</option>
-        <option value="A">Tipo A</option>
-        <option value="B">Tipo B</option>
-        <option value="C">Tipo C</option>
-      </select>
-    </div>
-  </div> -->
-  <div class="acciones">
+    <div class="acciones">
       <button mat-raised-button color="primary">
         <mat-icon>add</mat-icon>
         Registrar Conductor
       </button>
   </div>
+  <div class="search-filter-container">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar conductor..." [(ngModel)]="searchText" (keyup)="filtrarPorNombre()" title="Buscar conductor por nombre" />
+      <button><i class="fas fa-search"></i> Buscar</button>
+    </div>
+    <div class="filters">
+      <select title="Filtrar por estado" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
+        <option value="">Todos los estados</option>
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+      <select title="Filtrar por tipo de licencia" [(ngModel)]="licenciaFiltro" (change)="filtrarPorLicencia()">  >
+        <option value="">Todos los tipos de licencia</option>
+        <option value="A">Tipo A</option>
+        <option value="B">Tipo B</option>
+        <option value="C">Tipo C</option>
+      </select>
+      <button class="filter-btn" mat-raised-button color="accent" (click)="limpiarFiltros()" title="Aplicar filtros">
+        Limpiar filtros
+      </button>
+    </div>
+  </div>
+
   <div class="table-responsive">
     <table class="drivers-table">
       <thead class="table-header">
@@ -40,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let driver of conductores">
+        <tr *ngFor="let driver of conductoresFiltrados">
           <td>{{ driver.id }}</td>
           <td>{{ driver.name }}</td>
           <td>
@@ -65,10 +69,10 @@
           </td>
           <td>
             <div class="action-buttons">
-              <button class="edit-btn" mat-icon-button color="accent">
+              <button class="edit-btn" mat-icon-button color="accent" (click)="editarConductor(driver)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button class="delete-btn" mat-icon-button color="warn">
+              <button class="delete-btn" mat-icon-button color="warn" (click)="eliminarConductor(driver)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>

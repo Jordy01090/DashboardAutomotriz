@@ -8,9 +8,15 @@
         Registrar Vehículo
       </button>
     </div>
-  
+
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrar Vehículos</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej: Toyota, PPB-1234, 2022" #inputFilter>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    
     <div class="tabla-vehiculos">
-      <table mat-table [dataSource]="vehiculos" class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   
         <!-- Placa -->
         <ng-container matColumnDef="placa">
@@ -47,10 +53,10 @@
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let vehiculo">
             <div class="acciones-botones">
-              <button mat-icon-button color="accent">
+              <button mat-icon-button color="accent" (click)="editarVehiculo(vehiculo)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn">
+              <button mat-icon-button color="warn" (click)="eliminarVehiculo(vehiculo)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>

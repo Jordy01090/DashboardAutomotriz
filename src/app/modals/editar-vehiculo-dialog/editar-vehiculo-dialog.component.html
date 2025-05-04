@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Editar Vehículo</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Placa</mat-label>
+      <input matInput placeholder="Placa" formControlName="placa" required>
+      <mat-error *ngIf="form.controls['placa'].hasError('required')">La placa es requerida</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Modelo</mat-label>
+      <input matInput placeholder="Modelo" formControlName="modelo" required>
+      <mat-error *ngIf="form.controls['modelo'].hasError('required')">El modelo es requerido</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Año</mat-label>
+      <input matInput type="number" placeholder="Año" formControlName="anio" required>
+      <mat-error *ngIf="form.controls['anio'].hasError('required')">El año es requerido</mat-error>
+      <mat-error *ngIf="form.controls['anio'].hasError('min')">El año debe ser mayor o igual a 1900</mat-error>
+      <mat-error *ngIf="form.controls['anio'].hasError('max')">El año no puede ser mayor al actual</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de Carga</mat-label>
+      <input matInput placeholder="Tipo de Carga" formControlName="tipoCarga">
+    </mat-form-field><br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <input matInput placeholder="Estado" formControlName="estado">
+    </mat-form-field><br>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="form.value" [disabled]="!form.valid" color="primary">Guardar</button>
+</div>

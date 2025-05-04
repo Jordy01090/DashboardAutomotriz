@@ -6,6 +6,9 @@ import { filter } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DriversService } from '../../services/drivers.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarEliminarDialogComponent } from '@app/modals/confirmar-eliminar-dialog/confirmar-eliminar-dialog.component';
+import { EditDriverComponent } from '@app/modals/edit-driver/edit-driver.component';
 
 @Component({
   selector: 'app-drivers-component',
@@ -16,6 +19,7 @@ import { DriversService } from '../../services/drivers.service';
 export class DriversComponentComponent implements OnInit {
   conductores: Driver[] = [];
   conductoresFiltrados: Driver[] = [];
+  private dialog:MatDialog;
 
   searchText: string = '';
   estadoFiltro: string = '';
@@ -24,8 +28,56 @@ export class DriversComponentComponent implements OnInit {
 
   columnaOrdenacion = 'id';
   ordenDireccion = 'asc';
-  constructor(driverService:DriversService) {
+  constructor(driverService:DriversService,dialog:MatDialog) {
+    this.dialog = dialog;
     this.driverService = driverService;
+  }
+  editarConductor(conductor:Driver){
+    const dialogRef = this.dialog.open(EditDriverComponent,{
+      data:conductor,
+      width:'400px',
+    })
+
+    dialogRef.afterClosed().subscribe((resultado)=>{
+      if(resultado){
+        console.log(resultado);
+        let driver:Driver = this.parseDriver(resultado);
+
+        this.conductores = this.driverService.editarConductor(this.conductores,driver);
+        this.conductoresFiltrados = this.driverService.editarConductor(this.conductoresFiltrados,driver);
+        this.aplicarFiltros();
+      }
+    })
+  }
+
+  private parseDriver(data:any):Driver{
+    return {
+
+      id:data.id,
+      name:data.name,
+      license:{
+        type:data.license,
+        expDate:data.expDate,
+      },
+      email:data.email,
+      status:data.status,
+      rating:data.rating,
+    }
+  }
+
+  eliminarConductor(conductor:Driver){
+    const dialogRef = this.dialog.open(ConfirmarEliminarDialogComponent,{
+      data:{
+        mensaje:`¿Está seguro de que desea eliminar al conductor ${conductor.name}?`,
+      }
+    })
+    dialogRef.afterClosed().subscribe((resultado)=>{
+      if(resultado){
+        this.conductores = this.driverService.eliminarConductor(this.conductores,conductor.id);
+        this.conductoresFiltrados = this.driverService.eliminarConductor(this.conductoresFiltrados,conductor.id);
+        this.aplicarFiltros();
+      }
+    })
   }
 
   ngOnInit(): void {

@@ -32,6 +32,13 @@ export class ListaMantenimientosComponent implements OnInit {
     const datosQuemados: Mantenimiento[] = [
       { id: 1, tipo: 'preventivo', descripcion: 'Cambio de aceite', fecha: new Date('2023-05-01'), costo: 100, kilometraje: 10000, vehiculoId: 5 },
       { id: 2, tipo: 'correctivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
+      { id: 3, tipo: 'correctivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
+      { id: 4, tipo: 'preventivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
+      { id: 5, tipo: 'preventivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
+      { id: 6, tipo: 'preventivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
+    
+    
+    
     ];
 
     // Cargar mantenimientos desde localStorage

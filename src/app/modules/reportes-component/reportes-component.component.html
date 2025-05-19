@@ -1,4 +1,85 @@
+
+
 <div class="reportes-container">
+  <h2>📊 Estado de Vehículos</h2>
+
+  <ngx-charts-pie-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="vehiculosPorEstado"
+    [legend]="showLegend"
+    [labels]="true"
+    [doughnut]="true"
+    [explodeSlices]="false"
+    [animations]="true">
+  </ngx-charts-pie-chart>
+</div>
+
+
+
+<div class="grafico-mantenimientos">
+  <h2>🛠️ Tipo de Mantenimientos</h2>
+
+  <ngx-charts-bar-vertical
+    [view]="view"
+    [scheme]="colorMantenimientos"
+    [results]="mantenimientosPorTipo"
+    [gradient]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showDataLabel]="true"
+    [animations]="true">
+  </ngx-charts-bar-vertical>
+</div>
+
+
+
+<div class="top-conductores">
+  <h2>🏅 Top 3 Conductores Mejor Evaluados</h2>
+
+  <ngx-charts-bar-horizontal
+  [view]="[500, 300]"
+  [scheme]="colorConductores"
+  [results]="topConductores"
+  [legend]="false"
+  [xAxis]="true"
+  [yAxis]="true"
+  [animations]="true"
+  
+  [xScaleMax]="5"
+  [xAxisTicks]="[1, 2, 3, 4, 5]"
+  [showDataLabel]="true">
+</ngx-charts-bar-horizontal>
+</div>
+
+<div class="estado-conductores">
+  <h2>👥 Estado de Conductores</h2>
+
+  <ngx-charts-pie-chart
+    [view]="[500, 300]"
+    [scheme]="colorConductores"
+    [results]="conductoresPorEstado"
+    [legend]="true"
+    [labels]="true"
+    [doughnut]="true"
+    [animations]="true">
+  </ngx-charts-pie-chart>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="reportes-container">
     <h1 class="titulo">Análisis de Flota - KPIs</h1>
     <div class="filtros-container">
         <mat-form-field appearance="fill" class="filtro">
@@ -64,5 +145,5 @@
 
       <p class="nota">* Imagen de ejemplo para presentación visual</p>
     </div>
-  </div>
+  </div> -->
   

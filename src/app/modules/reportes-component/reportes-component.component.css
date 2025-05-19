@@ -1,89 +1,121 @@
 .reportes-container {
+  padding: 24px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #9e0acb;
+  /* color: #3f51b5; */
+}
+
+/* Estilo para etiquetas fuera del gráfico */
+::ng-deep .pie-label {
+  fill: white !important;
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+
+
+/* Estilo para los textos de la leyenda */
+::ng-deep .legend-label {
+  font-size: 20px;
+  color: white !important;
+}
+
+.reportes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* CENTRAR HORIZONTAL */
+  justify-content: center; /* CENTRAR VERTICAL si se da altura */
+  padding: 24px;
+  background-color: #0f1126; /* o tu color base */
+  border-radius: 12px;
+  min-height: 0vh;
+  text-align: center;
+}
+
+
+
+.reportes-container {
     padding: 2rem;
     background-color: #1a1a2e;
     color: #f1f1f1;
     font-family: 'Segoe UI', sans-serif;
   }
   
-  .titulo {
-    text-align: center;
-    color: #4dd0e1;
-    margin-bottom: 2rem;
-  }
-  
-  .kpis-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-  
-  .kpi-card {
-    background-color: #27293d;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    text-align: center;
-  }
-  
-  .kpi-card h3 {
-    margin-bottom: 0.5rem;
-    color: #ffffff;
-  }
-  
-  .valor {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #00e5ff;
-  }
-  
-  .detalle {
-    font-size: 0.85rem;
-    color: #aaaaaa;
-  }
-  
-  .grafico-section {
-    margin-top: 2rem;
-    text-align: center;
-  }
-  
-  .grafico-section h2 {
-    margin-bottom: 1rem;
-    color: #ffca28;
-  }
-  
-  .grafico-section img {
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-  }
-  
-  .nota {
-    font-size: 0.75rem;
-    color: #888;
-    margin-top: 0.5rem;
-  }
-  
-  .filtros-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    align-items: center;
-  }
-  
-  .filtro {
-    min-width: 200px;
-    flex: 1;
-  }
-  
-  button[disabled] {
-    opacity: 0.7;
-  }
-  .grafico-section {
-    max-width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
-    margin-top: 1rem;
-  }
+
+  .grafico-mantenimientos {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.grafico-mantenimientos h2 {
+  color: #66bb6a;
+  margin-bottom: 20px;
+}
+
+/* Cambiar color de las etiquetas del eje X (Preventivo, Correctivo) */
+::ng-deep .x.axis text {
+  fill: white !important;
+  font-weight: bold;
+}
+
+
+/* Aumentar ancho del contenedor de la leyenda */
+/* ::ng-deep .legend-items-container {
+  width: 250px !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+} */
+
+/* Forzar visibilidad completa de los textos de leyenda */
+/* ::ng-deep .legend-label {
+  max-width: unset !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  font-size: 15px;
+  color: white !important;
+} */
+
+.top-conductores, .estado-conductores {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.top-conductores h2 {
+  color: #ffd54f;
+}
+
+.estado-conductores h2 {
+  color: #42A5F5;
+}
+
+/* Eje Y: nombres de los conductores */
+::ng-deep .y.axis text {
+  fill: white !important;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* Eje X: valores numéricos */
+::ng-deep .x.axis text {
+  fill: white !important;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+
   

@@ -1,71 +1,150 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { IVehiculo } from '@app/interface/IVehiculo';
+import { VehiculoService } from '@services/vehiculo-service/vehiculo.service';
+import { CrearVehiculoDialogComponent } from '@modals/crear-vehiculo-dialog/crear-vehiculo-dialog.component';
+import { EditarVehiculoDialogComponent } from '@modals/editar-vehiculo-dialog/editar-vehiculo-dialog.component';
+import { ConfirmarEliminarDialogComponent } from '@modals/confirmar-eliminar-dialog/confirmar-eliminar-dialog.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialog } from '@angular/material/dialog';
-import { EditarVehiculoDialogComponent } from '@modals/editar-vehiculo-dialog/editar-vehiculo-dialog.component';
-import { ConfirmarEliminarDialogComponent } from '@modals/confirmar-eliminar-dialog/confirmar-eliminar-dialog.component';
 
 @Component({
   selector: 'app-vehiculos-component',
   standalone: true,
   imports: [
-    MatIconModule,
+    CommonModule,
     MatTableModule,
+    MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   templateUrl: './vehiculos-component.component.html',
   styleUrls: ['./vehiculos-component.component.css']
 })
-export class VehiculosComponentComponent {
-  vehiculos = [
-    { placa: 'ABC-1234', modelo: 'Toyota Hilux', anio: 2020, tipoCarga: 'Pesada', estado: 'Activo' },
-    { placa: 'DEF-5678', modelo: 'Ford Ranger', anio: 2019, tipoCarga: 'Ligera', estado: 'Mantenimiento' },
-    { placa: 'GHI-9012', modelo: 'Nissan Frontier', anio: 2021, tipoCarga: 'Mediana', estado: 'Activo' },
-    { placa: 'JKL-3456', modelo: 'Chevrolet D-Max', anio: 2018, tipoCarga: 'Pesada', estado: 'Inactivo' },
-    { placa: 'MNO-7890', modelo: 'Mitsubishi L200', anio: 2022, tipoCarga: 'Ligera', estado: 'Activo' }
-  ];
+export class VehiculosComponentComponent implements OnInit {
+  vehiculos: IVehiculo[] = [];
+  displayedColumns: string[] = ['placa', 'modelo', 'anio', 'tipoCarga', 'estado', 'conductor', 'acciones'];
+  dataSource = new MatTableDataSource<IVehiculo>(this.vehiculos);
+  isLoading = false;
 
-  displayedColumns: string[] = ['placa', 'modelo', 'anio', 'tipoCarga', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource(this.vehiculos);
+  constructor(
+    public dialog: MatDialog,
+    private vehiculoService: VehiculoService,
+    private snackBar: MatSnackBar
+  ) {}
 
-  constructor(public dialog: MatDialog) {}
+  ngOnInit(): void {
+    this.cargarVehiculos();
+  }
+
+  cargarVehiculos(): void {
+    this.isLoading = true;
+    this.vehiculoService.getVehiculos().subscribe({
+      next: (data) => {
+        this.vehiculos = data;
+        this.dataSource.data = this.vehiculos;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.snackBar.open('Error al cargar los vehículos.', 'Cerrar', { duration: 3000 });
+        this.isLoading = false;
+      }
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editarVehiculo(vehiculo: any): void {
-    const dialogRef = this.dialog.open(EditarVehiculoDialogComponent, {
-      width: '400px',
-      data: vehiculo
+  registrarVehiculo(): void {
+    const dialogRef = this.dialog.open(CrearVehiculoDialogComponent, {
+      width: '450px',
+      data: null
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const index = this.vehiculos.findIndex(v => v === vehiculo);
-        if (index !== -1) {
-          this.vehiculos[index] = result;
-          this.dataSource.data = [...this.vehiculos];
-        }
+    dialogRef.afterClosed().subscribe((result: Partial<IVehiculo> | undefined) => {
+      if (result && result.placa) {
+        this.isLoading = true;
+        const vehiculoPayload: Omit<IVehiculo, 'id'> = {
+          placa: result.placa,
+          modelo: result.modelo!,
+          anio: result.anio!,
+          tipoCarga: result.tipoCarga!,
+          estado: result.estado!,
+          conductorId: result.conductorId,
+        };
+
+        this.vehiculoService.addVehiculo(vehiculoPayload, result.nombreConductor).subscribe({
+          next: (nuevoVehiculo) => {
+            this.snackBar.open(`Vehículo ${nuevoVehiculo.placa} registrado con éxito.`, 'Cerrar', { duration: 3000 });
+            this.cargarVehiculos();
+          },
+          error: (err) => {
+            this.snackBar.open('Error al registrar el vehículo.', 'Cerrar', { duration: 3000 });
+            this.isLoading = false;
+          }
+        });
       }
     });
   }
 
-  eliminarVehiculo(vehiculo: any): void {
-    const dialogRef = this.dialog.open(ConfirmarEliminarDialogComponent, {
-      data: { mensaje: `¿Está seguro que desea eliminar el vehículo con placa ${vehiculo.placa}?` }
+  editarVehiculo(vehiculoAEditar: IVehiculo): void {
+    if (!vehiculoAEditar.id) {
+      this.snackBar.open('Error: Vehículo sin ID.', 'Cerrar', {duration: 3000});
+      return;
+    }
+    const dialogRef = this.dialog.open(EditarVehiculoDialogComponent, {
+      width: '450px',
+      data: { ...vehiculoAEditar }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.vehiculos = this.vehiculos.filter(v => v !== vehiculo);
-        this.dataSource.data = this.vehiculos;
+    dialogRef.afterClosed().subscribe((result: IVehiculo | undefined) => {
+      if (result && result.id) {
+        this.isLoading = true;
+        this.vehiculoService.updateVehiculo(result.id, result).subscribe({
+          next: (vehiculoActualizado) => {
+            this.snackBar.open(`Vehículo ${vehiculoActualizado?.placa} actualizado.`, 'Cerrar', { duration: 3000 });
+            this.cargarVehiculos();
+          },
+          error: (err) => {
+            this.snackBar.open('Error al actualizar el vehículo.', 'Cerrar', { duration: 3000 });
+            this.isLoading = false;
+          }
+        });
+      }
+    });
+  }
+
+  eliminarVehiculo(vehiculoAEliminar: IVehiculo): void {
+    if (!vehiculoAEliminar.id) {
+        this.snackBar.open('Error: Vehículo sin ID.', 'Cerrar', { duration: 3000 });
+        return;
+    }
+    const dialogRef = this.dialog.open(ConfirmarEliminarDialogComponent, {
+      data: { mensaje: `¿Está seguro que desea eliminar el vehículo con placa ${vehiculoAEliminar.placa}?` }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmado => {
+      if (confirmado && vehiculoAEliminar.id) {
+        this.isLoading = true;
+        this.vehiculoService.deleteVehiculo(vehiculoAEliminar.id).subscribe({
+          next: () => {
+            this.snackBar.open(`Vehículo ${vehiculoAEliminar.placa} eliminado.`, 'Cerrar', { duration: 3000 });
+            this.cargarVehiculos();
+          },
+          error: (err) => {
+            this.snackBar.open('Error al eliminar el vehículo.', 'Cerrar', { duration: 3000 });
+            this.isLoading = false;
+          }
+        });
       }
     });
   }

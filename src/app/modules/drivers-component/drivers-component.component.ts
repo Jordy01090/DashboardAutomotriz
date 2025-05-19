@@ -70,11 +70,11 @@ export class DriversComponentComponent implements OnInit {
 
   private parseDriver(data: any): Driver {
     return {
-      id: data.id,
-      name: data.name,
-      license: {
-        type: data.license,
-        expDate: data.expDate,
+      id:data.id,
+      name:data.name,
+      license:{
+        type:data.license,
+        expDate:data.expDate,
       },
       email: data.email,
       status: data.status,

@@ -15,7 +15,6 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { Assigment } from '@app/modules/drivers-component/interfaces/assigment';
-import { id } from '@swimlane/ngx-charts';
 @Component({
   selector: 'app-edit-assignment-dialog',
   imports: [
@@ -47,12 +46,10 @@ export class EditAssignmentDialogComponent {
     })
 
   }
-
   onNoClick():void{
     this.dialogRef.close();
 
   }
-
   guardar():void{
     if(this.form.valid){
       this.dialogRef.close(this.form.value);

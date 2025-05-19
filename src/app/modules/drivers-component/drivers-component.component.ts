@@ -50,6 +50,7 @@ export class DriversComponentComponent implements OnInit {
     this.driverService = driverService;
   }
   editarConductor(conductor: Driver) {
+    console.log(conductor);
     const dialogRef = this.dialog.open(EditDriverComponent, {
       data: conductor,
       width: '400px',

@@ -64,7 +64,6 @@ export class AssignmentTableComponent implements OnInit {
   ngOnInit(): void {
     this.conductoresService.conductoresFiltrados$.subscribe((conductores)=>{
       this.conductores = conductores
-
       this.asignRandomVehicleAndDriver();
       console.log(this.asignaciones);
     })

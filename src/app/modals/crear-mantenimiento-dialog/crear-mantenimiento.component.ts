@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Mantenimiento } from '../../modules/mantenimiento-component/lista-mantenimientos/interfaces/lista'; // Ajusta la ruta correcta
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +13,6 @@ import { MatNativeDateModule } from '@angular/material/core';
   selector: 'app-crear-mantenimiento',
   imports: [CommonModule,
     FormsModule,
-   // BrowserAnimationsModule, // Required for Angular Material
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule, MatDatepickerModule, MatNativeDateModule],
@@ -47,12 +45,10 @@ export class CrearMantenimientoComponent implements OnInit {
   const fecha = new Date(this.mantenimiento.fecha);
   fecha.setHours(0, 0, 0, 0); // Normalizar la fecha al inicio del día
   this.mantenimiento.fecha = fecha;
-
-  console.log(this.mantenimiento);
   this.dialogRef.close(this.mantenimiento); // Devuelve los datos al componente principal
 }
 
   cancelar(): void {
-    this.dialogRef.close(); // Cierra el modal sin guardar cambios
+    this.dialogRef.close(); 
   }
 }

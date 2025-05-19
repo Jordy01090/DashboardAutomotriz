@@ -31,15 +31,12 @@ export class ListaMantenimientosComponent implements OnInit {
   mantenimientosFiltrados: Mantenimiento[] = []; 
   displayedColumns: string[] = ['id', 'tipo', 'descripcion', 'fecha', 'costo', 'kilometraje', 'vehiculoId'];
 
+  fechaInicio: Date | null = null;
+  fechaFin: Date | null = null;
   
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    /*const datosQuemados: Mantenimiento[] = [
-      { id: 1, tipo: 'preventivo', descripcion: 'Cambio de aceite', fecha: new Date('2023-05-01'), costo: 100, kilometraje: 10000, vehiculoId: 5 },
-      { id: 2, tipo: 'correctivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
-    ];*/
-
     // Cargar mantenimientos desde localStorage
     const data = localStorage.getItem('mantenimientos');
     if (data) {
@@ -49,17 +46,10 @@ export class ListaMantenimientosComponent implements OnInit {
         m.fecha = new Date(m.fecha);
       });
 
-      /*this.mantenimientos = [
-        ...mantenimientosGuardados,
-        ...datosQuemados.filter(q => !mantenimientosGuardados.some((m: Mantenimiento) => m.id === q.id))
-      ];*/
-
       this.mantenimientos = mantenimientosGuardados;
     } else {
-      /*this.mantenimientos = [...datosQuemados];*/
       this.mantenimientos = [];
     }
-
     localStorage.setItem('mantenimientos', JSON.stringify(this.mantenimientos));
     this.mantenimientosFiltrados = [...this.mantenimientos];
   }
@@ -105,32 +95,8 @@ export class ListaMantenimientosComponent implements OnInit {
       }
     });
   }
-  
 
-  // Método para filtrar los registros por fecha
-  actualizarFiltro(): void {
-    if (this.busqueda) {
-      const fechaBusqueda = new Date(this.busqueda);
-      fechaBusqueda.setHours(0, 0, 0, 0); // Normalizar la fecha de búsqueda al inicio del día
-  
-      this.mantenimientosFiltrados = this.mantenimientos.filter(reg => {
-        const fechaRegistro = new Date(reg.fecha);
-        fechaRegistro.setHours(0, 0, 0, 0); // Normalizar la fecha del registro al inicio del día
-        return fechaRegistro.getTime() === fechaBusqueda.getTime();
-      });
-  
-      // Mostrar un modal si no hay resultados
-      if (this.mantenimientosFiltrados.length === 0) {
-        this.dialog.open(NoRegistrosMantenimientoDialogComponent, {
-          width: '300px',
-          data: { fecha: this.busqueda }
-        });
-        console.log('No hay registros para la fecha seleccionada:', this.busqueda);
-      }
-    } else {
-      this.mantenimientosFiltrados = [...this.mantenimientos];
-    }
-  }
+  // Método para buscar mantenimientos por fecha
   eliminarMantenimiento(id: number): void {
     const confirmacion = confirm('¿Estás seguro de que deseas eliminar este mantenimiento?');
     if (confirmacion) {
@@ -139,9 +105,8 @@ export class ListaMantenimientosComponent implements OnInit {
       localStorage.setItem('mantenimientos', JSON.stringify(this.mantenimientos));
     }
   }
-  fechaInicio: Date | null = null;
-  fechaFin: Date | null = null;
-  //fechaFin: Date | null = null;
+  
+  // Método para filtrar mantenimientos por fecha
   filtrarPorFecha() {
     console.log('Filtrando…');
   
@@ -172,11 +137,12 @@ export class ListaMantenimientosComponent implements OnInit {
       console.log('Fechas incompletas o vacías, mostrando todos los mantenimientos.');
     }
   }
+
+  // Método para limpiar los filtros de fecha
   limpiarFiltros(){
     this.fechaInicio = null;
     this.fechaFin = null;
     this.filtrarPorFecha();
-   }
-  
+   } 
 }
 

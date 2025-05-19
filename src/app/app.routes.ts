@@ -42,6 +42,7 @@ export const routes: Routes = [
                   import(
                     './modules/drivers-component/assignment-table/assignment-table.component'
                   ).then((m) => m.AssignmentTableComponent),
+                outlet: 'asignaciones',
               },
               {
                 path: 'evaluacion',
@@ -49,6 +50,7 @@ export const routes: Routes = [
                   import(
                     './modules/drivers-component/rating-table/rating-table.component'
                   ).then((m) => m.RatingTableComponent),
+                outlet: 'evaluacion',
               },
             ],
           },

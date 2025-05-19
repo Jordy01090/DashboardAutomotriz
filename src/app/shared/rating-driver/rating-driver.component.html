@@ -1,0 +1,38 @@
+<mat-card class="rating-card" *ngIf="evaluation">
+  <mat-card-header>
+    <mat-card-title>{{`Conductor:  ${evaluation.conductor}`}}</mat-card-title>
+    <mat-card-subtitle>Tipo de licencia: {{ evaluation.tipoLicencia }}</mat-card-subtitle>
+    <mat-card-subtitle>Date: {{ evaluation.fechaExpiracion | date }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="rating-section">
+      <h3>Puntuacion: {{ evaluation.puntualidad }}/5</h3>
+      <mat-progress-bar [value]="evaluation.puntualidad * 20" [color]="getProgressColor(evaluation.puntualidad)"></mat-progress-bar>
+    </div>
+
+    <div class="rating-section">
+      <h3>Calificacion: {{ evaluation.seguridad }}/5</h3>
+      <mat-progress-bar [value]="evaluation.seguridad * 20" [color]="getProgressColor(evaluation.puntualidad)"></mat-progress-bar>
+    </div>
+
+    <div class="rating-section">
+      <h3>Vehicle Care: {{ evaluation.cuidadoVehiculo }}/5</h3>
+      <mat-progress-bar [value]="evaluation.cuidadoVehiculo * 20" [color]="getProgressColor(evaluation.puntualidad)"></mat-progress-bar>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="total-score-section">
+      <h2>Total Score: {{ totalScore | number:'1.1-1' }}/5</h2>
+      <mat-progress-bar [value]="totalScore * 20" [color]="getProgressColor(totalScore)" [bufferValue]="100"></mat-progress-bar>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="comments-section">
+      <h3>Comentarios:</h3>
+      <p>{{ evaluation.comentarios }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>

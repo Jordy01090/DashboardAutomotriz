@@ -104,7 +104,7 @@
     <mat-tab label="Asignaciones">
       <div class="tab-content">
 
-        <div *ngIf="!mostrarComponenteAsignaciones" class="placeholder-content">
+        <div *ngIf="mostrarComponenteAsignaciones" class="placeholder-content">
           <h3>Asignaciones de Conductores</h3>
           <p>Aquí podrás gestionar las asignaciones de vehículos a conductores</p>
           <button mat-raised-button color="primary" (click)="cargarComponenteAsignaciones()">
@@ -113,7 +113,7 @@
           </button>
         </div>
         <div class="acciones">
-          <router-outlet ></router-outlet>
+          <router-outlet name="asignaciones" ></router-outlet>
         </div>
       </div>
     </mat-tab>
@@ -121,14 +121,17 @@
     <mat-tab label="Evaluación">
       <div class="tab-content">
 
-        <router-outlet name="evaluacion"></router-outlet>
-        <div *ngIf="!mostrarComponenteEvaluacion" class="placeholder-content">
+
+        <div *ngIf="mostrarComponenteEvaluacion" class="placeholder-content">
           <h3>Evaluación de Conductores</h3>
           <p>Realiza evaluaciones de desempeño para los conductores</p>
           <button mat-raised-button color="primary" (click)="cargarComponenteEvaluacion()">
             <mat-icon>assessment</mat-icon>
             Realizar Evaluaciones
           </button>
+        </div>
+        <div class="acciones">
+          <router-outlet  name="evaluacion" ></router-outlet>
         </div>
       </div>
     </mat-tab>

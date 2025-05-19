@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmarEliminarDialogComponent } from '@app/modals/confirmar-eliminar-dialog/confirmar-eliminar-dialog.component';
 import { EditDriverComponent } from '@app/modals/edit-driver/edit-driver.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-drivers-component',
@@ -40,7 +40,12 @@ export class DriversComponentComponent implements OnInit {
 
   columnaOrdenacion = 'id';
   ordenDireccion = 'asc';
-  constructor(driverService: DriversService, dialog: MatDialog,private router:Router) {
+  constructor(
+    driverService: DriversService,
+    dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.dialog = dialog;
     this.driverService = driverService;
   }
@@ -70,11 +75,11 @@ export class DriversComponentComponent implements OnInit {
 
   private parseDriver(data: any): Driver {
     return {
-      id:data.id,
-      name:data.name,
-      license:{
-        type:data.license,
-        expDate:data.expDate,
+      id: data.id,
+      name: data.name,
+      license: {
+        type: data.license,
+        expDate: data.expDate,
       },
       email: data.email,
       status: data.status,
@@ -196,25 +201,76 @@ export class DriversComponentComponent implements OnInit {
   }
 
   cargarComponenteAsignaciones() {
-    this.mostrarComponenteAsignaciones = !this.mostrarComponenteAsignaciones;
+    this.mostrarComponenteAsignaciones = true;
+    this.router.navigate(
+      [
+        {
+          outlets: {
+            asignaciones: ['asignaciones'],
+          },
+        },
+      ],
+      { relativeTo: this.activatedRoute }
+    );
   }
   onTabChange(event: any) {
     const tabIndex = event.index;
-    if (tabIndex === 0) {
-      this.mostrarComponenteAsignaciones = true;
-      this.router.navigate(['/principal/conductores']);
-      this.mostrarComponenteEvaluacion = false;
-    } else if (tabIndex === 1) {
-      this.mostrarComponenteAsignaciones = false;
-      this.mostrarComponenteEvaluacion = true;
-      this.router.navigate(['/principal/conductores/asignaciones']);
-    }else if(tabIndex === 2){
-      this.mostrarComponenteAsignaciones = false;
-      this.mostrarComponenteEvaluacion = false;
-      this.router.navigate(['/principal/conductores/evaluacion']);
-    }
+    this.router
+      .navigate(
+        [
+          {
+            outlets: {
+              asignaciones: null,
+              evaluacion: null,
+            },
+          },
+        ],
+        { relativeTo: this.activatedRoute }
+      )
+      .then(() => {
+        if (tabIndex === 1) {
+          this.router.navigate(
+            [
+              {
+                outlets: {
+                  asignaciones: ['asignaciones'],
+                },
+              },
+            ],
+            { relativeTo: this.activatedRoute }
+          );
+          this.mostrarComponenteAsignaciones = true;
+          this.mostrarComponenteEvaluacion = false;
+        } else if (tabIndex === 2) {
+          this.router.navigate(
+            [
+              {
+                outlets: {
+                  evaluacion: ['evaluacion'],
+                },
+              },
+            ],
+            { relativeTo: this.activatedRoute }
+          );
+          this.mostrarComponenteAsignaciones = false;
+          this.mostrarComponenteEvaluacion = true;
+        } else {
+          this.mostrarComponenteAsignaciones = false;
+          this.mostrarComponenteEvaluacion = false;
+        }
+      });
   }
-  cargarComponenteEvaluacion(){
-    this.mostrarComponenteEvaluacion = !this.mostrarComponenteEvaluacion;
+  cargarComponenteEvaluacion() {
+    this.mostrarComponenteEvaluacion = true;
+    this.router.navigate(
+      [
+        {
+          outlets: {
+            evaluacion: ['evaluacion'],
+          },
+        },
+      ],
+      { relativeTo: this.activatedRoute }
+    );
   }
 }

@@ -9,17 +9,29 @@ import { DriversService } from '../../services/drivers.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmarEliminarDialogComponent } from '@app/modals/confirmar-eliminar-dialog/confirmar-eliminar-dialog.component';
 import { EditDriverComponent } from '@app/modals/edit-driver/edit-driver.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-drivers-component',
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatButtonModule,
+    RouterModule,
+  ],
   templateUrl: './drivers-component.component.html',
   styleUrl: './drivers-component.component.css',
 })
 export class DriversComponentComponent implements OnInit {
   conductores: Driver[] = [];
-  conductoresFiltrados: Driver[] = [];
-  private dialog:MatDialog;
+  public conductoresFiltrados: Driver[] = [];
+  mostrarComponenteAsignaciones: boolean = false;
+  mostrarComponenteEvaluacion: boolean = false;
+  private dialog: MatDialog;
 
   searchText: string = '';
   estadoFiltro: string = '';
@@ -28,56 +40,67 @@ export class DriversComponentComponent implements OnInit {
 
   columnaOrdenacion = 'id';
   ordenDireccion = 'asc';
-  constructor(driverService:DriversService,dialog:MatDialog) {
+  constructor(driverService: DriversService, dialog: MatDialog,private router:Router) {
     this.dialog = dialog;
     this.driverService = driverService;
   }
-  editarConductor(conductor:Driver){
-    const dialogRef = this.dialog.open(EditDriverComponent,{
-      data:conductor,
-      width:'400px',
-    })
+  editarConductor(conductor: Driver) {
+    const dialogRef = this.dialog.open(EditDriverComponent, {
+      data: conductor,
+      width: '400px',
+    });
 
-    dialogRef.afterClosed().subscribe((resultado)=>{
-      if(resultado){
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
         console.log(resultado);
-        let driver:Driver = this.parseDriver(resultado);
+        let driver: Driver = this.parseDriver(resultado);
 
-        this.conductores = this.driverService.editarConductor(this.conductores,driver);
-        this.conductoresFiltrados = this.driverService.editarConductor(this.conductoresFiltrados,driver);
+        this.conductores = this.driverService.editarConductor(
+          this.conductores,
+          driver
+        );
+        this.conductoresFiltrados = this.driverService.editarConductor(
+          this.conductoresFiltrados,
+          driver
+        );
         this.aplicarFiltros();
       }
-    })
+    });
   }
 
-  private parseDriver(data:any):Driver{
+  private parseDriver(data: any): Driver {
     return {
-
-      id:data.id,
-      name:data.name,
-      license:{
-        type:data.license,
-        expDate:data.expDate,
+      id: data.id,
+      name: data.name,
+      license: {
+        type: data.license,
+        expDate: data.expDate,
       },
-      email:data.email,
-      status:data.status,
-      rating:data.rating,
-    }
+      email: data.email,
+      status: data.status,
+      rating: data.rating,
+    };
   }
 
-  eliminarConductor(conductor:Driver){
-    const dialogRef = this.dialog.open(ConfirmarEliminarDialogComponent,{
-      data:{
-        mensaje:`¿Está seguro de que desea eliminar al conductor ${conductor.name}?`,
-      }
-    })
-    dialogRef.afterClosed().subscribe((resultado)=>{
-      if(resultado){
-        this.conductores = this.driverService.eliminarConductor(this.conductores,conductor.id);
-        this.conductoresFiltrados = this.driverService.eliminarConductor(this.conductoresFiltrados,conductor.id);
+  eliminarConductor(conductor: Driver) {
+    const dialogRef = this.dialog.open(ConfirmarEliminarDialogComponent, {
+      data: {
+        mensaje: `¿Está seguro de que desea eliminar al conductor ${conductor.name}?`,
+      },
+    });
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        this.conductores = this.driverService.eliminarConductor(
+          this.conductores,
+          conductor.id
+        );
+        this.conductoresFiltrados = this.driverService.eliminarConductor(
+          this.conductoresFiltrados,
+          conductor.id
+        );
         this.aplicarFiltros();
       }
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -126,39 +149,72 @@ export class DriversComponentComponent implements OnInit {
         rating: 5,
       },
     ];
+    this.driverService.setConductoresFiltrados(this.conductores);
     this.conductoresFiltrados = this.conductores;
   }
 
- aplicarFiltros(){
-  let resultado = this.conductores;
+  aplicarFiltros() {
+    let resultado = this.conductores;
 
-  if(this.estadoFiltro!==''){
-    resultado = this.driverService.filtrarConductoresPorEstado(resultado,this.estadoFiltro);
+    if (this.estadoFiltro !== '') {
+      resultado = this.driverService.filtrarConductoresPorEstado(
+        resultado,
+        this.estadoFiltro
+      );
+    }
+    if (this.searchText !== '') {
+      resultado = this.driverService.bucarConductoresPorNombre(
+        resultado,
+        this.searchText
+      );
+    }
+    if (this.licenciaFiltro !== '') {
+      resultado = this.driverService.filtrarPorLicencia(
+        resultado,
+        this.licenciaFiltro
+      );
+    }
+
+    this.conductoresFiltrados = resultado;
   }
-  if(this.searchText!==''){
-    resultado = this.driverService.bucarConductoresPorNombre(resultado,this.searchText);
-  }
-  if(this.licenciaFiltro!==''){
-    resultado = this.driverService.filtrarPorLicencia(resultado,this.licenciaFiltro);
+  filtrarPorEstado() {
+    this.aplicarFiltros();
   }
 
-  this.conductoresFiltrados = resultado;
- }
- filtrarPorEstado(){
-  this.aplicarFiltros();
- }
+  filtrarPorNombre() {
+    this.aplicarFiltros();
+  }
+  filtrarPorLicencia() {
+    this.aplicarFiltros();
+  }
 
- filtrarPorNombre(){
-  this.aplicarFiltros();
- }
- filtrarPorLicencia(){
-  this.aplicarFiltros();
- }
+  limpiarFiltros() {
+    this.estadoFiltro = '';
+    this.searchText = '';
+    this.licenciaFiltro = '';
+    this.aplicarFiltros();
+  }
 
- limpiarFiltros(){
-  this.estadoFiltro = '';
-  this.searchText = '';
-  this.licenciaFiltro = '';
-  this.aplicarFiltros();
- }
+  cargarComponenteAsignaciones() {
+    this.mostrarComponenteAsignaciones = !this.mostrarComponenteAsignaciones;
+  }
+  onTabChange(event: any) {
+    const tabIndex = event.index;
+    if (tabIndex === 0) {
+      this.mostrarComponenteAsignaciones = true;
+      this.router.navigate(['/principal/conductores']);
+      this.mostrarComponenteEvaluacion = false;
+    } else if (tabIndex === 1) {
+      this.mostrarComponenteAsignaciones = false;
+      this.mostrarComponenteEvaluacion = true;
+      this.router.navigate(['/principal/conductores/asignaciones']);
+    }else if(tabIndex === 2){
+      this.mostrarComponenteAsignaciones = false;
+      this.mostrarComponenteEvaluacion = false;
+      this.router.navigate(['/principal/conductores/evaluacion']);
+    }
+  }
+  cargarComponenteEvaluacion(){
+    this.mostrarComponenteEvaluacion = !this.mostrarComponenteEvaluacion;
+  }
 }

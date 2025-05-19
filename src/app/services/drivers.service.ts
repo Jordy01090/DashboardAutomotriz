@@ -1,11 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Driver } from "../modules/drivers-component/interfaces/driver";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn:'root'
 })
 export class DriversService {
-
+  private conductoresFiltradosSubject = new BehaviorSubject<Driver[]>([]);
+  conductoresFiltrados$ = this.conductoresFiltradosSubject.asObservable();
+  getConductoresFiltrados() {
+    return this.conductoresFiltradosSubject.getValue();
+  }
+  setConductoresFiltrados(conductores: Driver[]) {
+    this.conductoresFiltradosSubject.next(conductores);
+  }
 
   public bucarConductoresPorNombre(conductores:Driver[],nombre:string):Driver[]{
     return conductores.filter((c)=>{

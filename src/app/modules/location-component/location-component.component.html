@@ -1,10 +1,38 @@
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-     crossorigin=""></script>
 <div class="location-component">
-  <h1>Location Component</h1>
-  <p>This is a simple location component.</p>
-  <div class="map-container">
-    <div id="mapa"></div>
-  </div>
-</div>
+    <h1>Location Component</h1>
+    <p>This is a simple location component.</p>
+    <div class="map-container">
+        <div id="mapa"></div>
+    </div>
+
+    <!-- <h2>Marker List</h2> -->
+    <!-- <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let marker of markers">
+                    <td>{{ marker.title }}</td>
+                    <td>{{ marker.description }}</td>
+                    <td>{{ marker.lat }}</td>
+                    <td>{{ marker.lng }}</td>
+                    <td>
+                        <button mat-icon-button color="primary" (click)="openUpdateMarkerForm(marker)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteMarker(marker.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+    </div>

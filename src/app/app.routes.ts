@@ -72,7 +72,7 @@ export const routes: Routes = [
             path: 'mantenimiento',
             loadComponent: () =>
               import(
-                './modules/mantenimiento/lista-mantenimientos/lista-mantenimientos.component'
+                './modules/mantenimiento-component/lista-mantenimientos/lista-mantenimientos.component'
               ).then((m) => m.ListaMantenimientosComponent),
           },
           {

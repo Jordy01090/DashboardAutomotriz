@@ -1,6 +1,6 @@
 import { Component,Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Mantenimiento } from '../../modules/mantenimiento/lista-mantenimientos/interfaces/lista'; // Ajusta la ruta correcta
+import { Mantenimiento } from '../../modules/mantenimiento-component/lista-mantenimientos/interfaces/lista'; // Ajusta la ruta correcta
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

@@ -1,0 +1,18 @@
+/* Ejemplo: marker-details-dialog.component.css */
+
+:host {
+  display: block;
+}
+
+.marker-details-dialog-title {
+  font-size: 20px;
+  color: #333;
+}
+
+.marker-details-dialog-content {
+  /* ...*/
+}
+
+.marker-details-dialog-actions {
+  /* ...*/
+}

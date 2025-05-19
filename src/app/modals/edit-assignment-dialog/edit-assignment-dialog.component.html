@@ -1,29 +1,36 @@
-<h1 mat-dialog-title>Editar Conductor</h1>
+<h1 mat-dialog-title>Editar asignacion</h1>
 <div mat-dialog-content>
   <form [formGroup]="form"  class="form-container-main">
     <mat-form-field appearance="outline">
-      <mat-label>Conductor</mat-label>
+      <mat-label>Nombre</mat-label>
       <input matInput placeholder="Nombre" formControlName="name" required>
-      <mat-error *ngIf="form.controls['conductor'].hasError('required')">EL nombre de conductor es requerido</mat-error>
+      <mat-error *ngIf="form.controls['name'].hasError('required')">El nombre es requerido</mat-error>
     </mat-form-field><br>
 
     <mat-form-field appearance="outline">
-      <mat-label>Vehiculo</mat-label>
-      <input matInput placeholder="Matricula de vehiculo" formControlName="license" required>
-      <mat-error *ngIf="form.controls['vehiculo'].hasError('required')">El numero de matricula es requerido</mat-error>
+      <mat-label>Tipo de Licencia</mat-label>
+      <input matInput placeholder="Tipo de Licencia" formControlName="license" required>
+      <mat-error *ngIf="form.controls['license'].hasError('required')">El tipo de licencia es requerido</mat-error>
     </mat-form-field><br>
 
     <mat-form-field appearance="outline">
-      <mat-label>Fecha de inicio</mat-label>
-      <input type="date" matInput placeholder="Fecha de inicio" formControlName="expDate" required>
-      <mat-error *ngIf="form.controls['fechaInicio'].hasError('required')">La fecha de inicio debe ser requerida</mat-error>
+      <mat-label>Fecha expiracion de Licencia</mat-label>
+      <input type="date" matInput placeholder="Fecha expiracion" formControlName="expDate" required>
+      <mat-error *ngIf="form.controls['expDate'].hasError('required')">La fecha de expiracion de licencia es requerido</mat-error>
     </mat-form-field><br>
 
     <mat-form-field appearance="outline">
-      <mat-label>Fecha Fin</mat-label>
+      <mat-label>Email</mat-label>
       <input matInput placeholder="Email" formControlName="email" required>
       <mat-error *ngIf="form.controls['email'].hasError('required')">El email es requerido</mat-error>
     </mat-form-field><br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Calificacion de conductor</mat-label>
+      <input type="number" max="5" matInput placeholder="Calificacion" formControlName="rating" required>
+      <mat-error *ngIf="form.controls['rating'].hasError('required')">La calificacion del conductor es requerida</mat-error>
+    </mat-form-field><br>
+
     <div class="status-container">
       <label for="status">Estado:</label>
       <select id="status" formControlName="status">

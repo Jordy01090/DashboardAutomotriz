@@ -4,6 +4,9 @@ import { Driver } from '../interfaces/driver';
 import { Assigment } from '../interfaces/assigment';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { EditAssignmentDialogComponent } from '@app/modals/edit-assignment-dialog/edit-assignment-dialog.component';
+import { AsignacionService } from '@app/services/asignacion.service';
 
 @Component({
   selector: 'app-assignment-table',
@@ -12,8 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './assignment-table.component.css',
 })
 export class AssignmentTableComponent implements OnInit {
-
-  constructor(private conductoresService:DriversService){}
+  private dialog:MatDialog;
+  public assigmentService:AsignacionService;
+  constructor(private conductoresService:DriversService,dialog:MatDialog,asignacionService:AsignacionService ){
+    this.dialog = dialog;
+    this.assigmentService = asignacionService;
+  }
 
   protected asignaciones:Assigment[] = [];
   public vehiculos = [
@@ -63,7 +70,18 @@ export class AssignmentTableComponent implements OnInit {
     })
   }
 
-
+  editarAsignacion(asignacion:Assigment){
+    const dialogRef = this.dialog.open(EditAssignmentDialogComponent,{
+      data:asignacion,
+      width:'500px'
+    });
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result){
+        let asignacion:Assigment = result;
+        this.asignaciones = this.assigmentService.editarAsignacion(this.asignaciones,asignacion);
+      }
+    })
+  }
   private asignRandomVehicleAndDriver(){
     this.asignaciones = this.vehiculos.map((vehiculo,index)=>{
       const  conductor = this.conductores[index % this.conductores.length];

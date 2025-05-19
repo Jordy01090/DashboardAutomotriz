@@ -7,55 +7,85 @@ import { AppComponent } from './app.component';
 
 export const routes: Routes = [
   {
-    path:'',
-    component:PublicLayoutComponentComponent,
-    children:[
+    path: '',
+    component: PublicLayoutComponentComponent,
+    children: [
       {
-        path:'login',
-        component:LoginComponent,
+        path: 'login',
+        component: LoginComponent,
       },
       {
-        path:'',
-        redirectTo:'/login',
-        pathMatch:'full'
-      }
-    ]
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
-    path:'',
-    component:AppComponent,
-    children:[
+    path: '',
+    component: AppComponent,
+    children: [
       {
-        path:'principal',
-        component:PrincipalComponent,
-        children:[
+        path: 'principal',
+        component: PrincipalComponent,
+        children: [
           {
-            path:'conductores',
-            loadComponent:()=>import('./modules/drivers-component/drivers-component.component').then(m=>m.DriversComponentComponent)
+            path: 'conductores',
+            loadComponent: () =>
+              import(
+                './modules/drivers-component/drivers-component.component'
+              ).then((m) => m.DriversComponentComponent),
+            children: [
+              {
+                path: 'asignaciones',
+                loadComponent: () =>
+                  import(
+                    './modules/drivers-component/assignment-table/assignment-table.component'
+                  ).then((m) => m.AssignmentTableComponent),
+                outlet: 'asignaciones',
+              },
+              {
+                path: 'evaluacion',
+                loadComponent: () =>
+                  import(
+                    './modules/drivers-component/rating-table/rating-table.component'
+                  ).then((m) => m.RatingTableComponent),
+                outlet: 'evaluacion',
+              },
+            ],
           },
           {
-            path:'ubicacion',
-            loadComponent:()=>import('./modules/location-component/location-component.component').then(m=>m.LocationComponent)
+            path: 'ubicacion',
+            loadComponent: () =>
+              import(
+                './modules/location-component/location-component.component'
+              ).then((m) => m.LocationComponent),
           },
           {
-            path:'vehiculos',
-            loadComponent:()=>import('./modules/vehiculos-component/vehiculos-component.component').then(m=>m.VehiculosComponentComponent)
+            path: 'vehiculos',
+            loadComponent: () =>
+              import(
+                './modules/vehiculos-component/vehiculos-component.component'
+              ).then((m) => m.VehiculosComponentComponent),
           },
           {
-            path:'mantenimiento',
-            loadComponent:()=>import('./modules/mantenimiento/lista-mantenimientos/lista-mantenimientos.component').then(m=>m.ListaMantenimientosComponent)
-          },{
-            path:'reportes',
-            loadComponent:()=>import('./modules/reportes-component/reportes-component.component').then(m=>m.ReportesComponentComponent)
-          }
-            
-          
-        ]
-      }
-
-    ]
-  }
-
+            path: 'mantenimiento',
+            loadComponent: () =>
+              import(
+                './modules/mantenimiento/lista-mantenimientos/lista-mantenimientos.component'
+              ).then((m) => m.ListaMantenimientosComponent),
+          },
+          {
+            path: 'reportes',
+            loadComponent: () =>
+              import(
+                './modules/reportes-component/reportes-component.component'
+              ).then((m) => m.ReportesComponentComponent),
+          },
+        ],
+      },
+    ],
+  },
 
   //     { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'principal',  component: PrincipalComponent },
@@ -64,5 +94,5 @@ export const routes: Routes = [
   //       path: 'login',
   //       component: LoginComponent
   //     },
-  ];
+];
 

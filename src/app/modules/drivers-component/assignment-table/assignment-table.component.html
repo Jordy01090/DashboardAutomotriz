@@ -1,0 +1,42 @@
+<div class="table-responsive">
+  <table class="drivers-table">
+    <thead class="table-header">
+      <tr>
+        <th>ID <i class="fas fa-sort"></i></th>
+        <th>conductor <i class="fas fa-sort"></i></th>
+        <th>Vehiculo</th>
+        <th>Fecha Inicio <i class="fas fa-sort"></i></th>
+        <th>Fecha Fin <i class="fas fa-sort"></i></th>
+        <th>Estado <i class="fas fa-sort"></i></th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let assigment of asignaciones">
+        <td>{{ assigment.id }}</td>
+        <td>{{ assigment.conductor }}</td>
+        <td>{{ assigment.vehiculo }}</td>
+        <td>{{ assigment.fechaInicio }}</td>
+        <td>{{ assigment.fechaFin==undefined?'En curso':assigment.fechaFin }}</td>
+        <td>
+          <span class="status-badge" [ngClass]="{'active': assigment.estado === 'Asignado', 'inactive': assigment.estado === 'Inactivo'}">
+            {{ assigment.estado }}
+          </span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="edit-btn" mat-icon-button color="accent" >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="delete-btn" mat-icon-button color="warn" >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="asignaciones.length === 0" >
+        <td colspan="7" class="no-data">No se encontraron conductores que coincidan con tu búsqueda</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

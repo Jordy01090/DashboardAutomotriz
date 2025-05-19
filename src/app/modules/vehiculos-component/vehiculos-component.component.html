@@ -3,8 +3,7 @@
     <p class="estudiante-info">Estudiante: Cesar Tipan</p>
   
     <div class="acciones">
-      <button mat-raised-button color="primary">
-        <mat-icon>add</mat-icon>
+      <button mat-raised-button color="primary" (click)="registrarVehiculo()"> <mat-icon>add</mat-icon>
         Registrar Vehículo
       </button>
     </div>
@@ -17,55 +16,58 @@
     
     <div class="tabla-vehiculos">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-        <!-- Placa -->
+
         <ng-container matColumnDef="placa">
           <th mat-header-cell *matHeaderCellDef> Placa </th>
           <td mat-cell *matCellDef="let vehiculo"> {{ vehiculo.placa }} </td>
         </ng-container>
-  
-        <!-- Modelo -->
+
         <ng-container matColumnDef="modelo">
           <th mat-header-cell *matHeaderCellDef> Modelo </th>
           <td mat-cell *matCellDef="let vehiculo"> {{ vehiculo.modelo }} </td>
         </ng-container>
-  
-        <!-- Año -->
+
         <ng-container matColumnDef="anio">
           <th mat-header-cell *matHeaderCellDef> Año </th>
           <td mat-cell *matCellDef="let vehiculo"> {{ vehiculo.anio }} </td>
         </ng-container>
-  
-        <!-- Tipo de Carga -->
+
         <ng-container matColumnDef="tipoCarga">
           <th mat-header-cell *matHeaderCellDef> Tipo de Carga </th>
           <td mat-cell *matCellDef="let vehiculo"> {{ vehiculo.tipoCarga }} </td>
         </ng-container>
-  
-        <!-- Estado -->
+
         <ng-container matColumnDef="estado">
           <th mat-header-cell *matHeaderCellDef> Estado </th>
           <td mat-cell *matCellDef="let vehiculo"> {{ vehiculo.estado }} </td>
         </ng-container>
-  
-        <!-- Acciones -->
+
+        <ng-container matColumnDef="conductor">
+          <th mat-header-cell *matHeaderCellDef> Conductor Asignado </th>
+          <td mat-cell *matCellDef="let vehiculo"> {{ vehiculo.nombreConductor || 'No asignado' }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let vehiculo">
             <div class="acciones-botones">
-              <button mat-icon-button color="accent" (click)="editarVehiculo(vehiculo)">
+              <button mat-icon-button color="accent" (click)="editarVehiculo(vehiculo)" [disabled]="isLoading">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="eliminarVehiculo(vehiculo)">
+              <button mat-icon-button color="warn" (click)="eliminarVehiculo(vehiculo)" [disabled]="isLoading">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
           </td>
         </ng-container>
-  
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No hay datos que coincidan con el filtro "{{inputFilter.value}}" o no hay vehículos registrados.
+          </td>
+        </tr>
       </table>
     </div>
-  </div>  

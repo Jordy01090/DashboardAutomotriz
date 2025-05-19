@@ -4,13 +4,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Marker } from '../interfaces/marker.interface'; // Asegúrate de que la ruta sea correcta
 
 @Component({
-  selector: 'app-update-marker-dialog',
-  templateUrl: './update-marker-dialog.component.html',
-  styleUrls: ['./update-marker-dialog.component.css'],
-  standalone: true,
+  selector: 'app-create-marker-dialog',
+  templateUrl: './create-marker-dialog.component.html',
+  styleUrls: ['./create-marker-dialog.component.css'],
+  standalone: true, // Importante para standalone components
   imports: [
     MatDialogModule,
     MatFormFieldModule,
@@ -19,17 +18,17 @@ import { Marker } from '../interfaces/marker.interface'; // Asegúrate de que la
     ReactiveFormsModule,
   ]
 })
-export class UpdateMarkerDialogComponent {
+export class CreateMarkerDialogComponent {
   markerForm: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<UpdateMarkerDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Marker,
+    public dialogRef: MatDialogRef<CreateMarkerDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { lat: number; lng: number },
     private fb: FormBuilder
   ) {
     this.markerForm = this.fb.group({
-      title: [data.title, Validators.required],
-      description: [data.description, Validators.required],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
       lat: [data.lat],
       lng: [data.lng]
     });

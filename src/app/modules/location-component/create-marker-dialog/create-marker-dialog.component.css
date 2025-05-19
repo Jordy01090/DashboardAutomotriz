@@ -1,0 +1,14 @@
+
+
+.create-marker-dialog-title { /* Prefijo para evitar conflictos */
+  font-size: 20px;
+  color: #333;
+}
+
+.create-marker-dialog-form {
+  /* ...*/
+}
+
+.create-marker-dialog-actions {
+  /* ...*/
+}

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <p><b>Description:</b> {{ data.description }}</p>
+  <p><b>Latitude:</b> {{ data.lat }}</p>
+  <p><b>Longitude:</b> {{ data.lng }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="dialogRef.close('update')">Update</button>
+  <button mat-button (click)="dialogRef.close('delete')">Delete</button>
+</div>

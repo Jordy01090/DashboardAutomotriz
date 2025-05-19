@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Update Marker</h1>
+<h1 mat-dialog-title>Create New Marker</h1>
 <div mat-dialog-content>
   <form [formGroup]="markerForm">
     <mat-form-field appearance="outline">
@@ -13,5 +13,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="markerForm.value" cdkFocusInitial>Update</button>
+  <button mat-button [mat-dialog-close]="markerForm.value" cdkFocusInitial>Create</button>
 </div>

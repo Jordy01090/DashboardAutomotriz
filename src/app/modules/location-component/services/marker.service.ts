@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs'; // Importa 'of'
-import { Marker } from '../interfaces/marker.interfaces'; // Asegúrate de que la ruta sea correcta
+import { Marker } from '../interfaces/marker.interface'; // Asegúrate de que la ruta sea correcta
 
 @Injectable({
   providedIn: 'root'

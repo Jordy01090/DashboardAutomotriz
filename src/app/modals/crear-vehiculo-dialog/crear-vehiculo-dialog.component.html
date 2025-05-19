@@ -1,0 +1,67 @@
+<h1 id="main-title">Registrar Nuevo Vehículo</h1>
+<div mat-dialog-content class="dialog-form-container"> <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="full-width-dialog">
+      <mat-label>Placa</mat-label>
+      <input matInput placeholder="Ej: ABC-1234" formControlName="placa" required>
+      <mat-error *ngIf="form.get('placa')?.hasError('required')">
+        La placa es requerida.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width-dialog">
+      <mat-label>Modelo</mat-label>
+      <input matInput placeholder="Ej: Toyota Hilux" formControlName="modelo" required>
+      <mat-error *ngIf="form.get('modelo')?.hasError('required')">
+        El modelo es requerido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width-dialog">
+      <mat-label>Año</mat-label>
+      <input matInput type="number" placeholder="Ej: 2000" formControlName="anio" required>
+      <mat-error *ngIf="form.get('anio')?.hasError('required')">
+        El año es requerido.
+      </mat-error>
+      <mat-error *ngIf="form.get('anio')?.hasError('min')">
+        El año debe ser 1900 o posterior.
+      </mat-error>
+      <mat-error *ngIf="form.get('anio')?.hasError('max')">
+        El año no puede ser más allá del próximo año.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width-dialog">
+      <mat-label>Tipo de Carga</mat-label>
+      <mat-select formControlName="tipoCarga" placeholder="Seleccione un tipo">
+        <mat-option *ngFor="let tipo of tiposDeCarga" [value]="tipo">
+          {{ tipo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width-dialog">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado" required placeholder="Seleccione un estado">
+        <mat-option *ngFor="let estadoOpt of estadosVehiculo" [value]="estadoOpt">
+          {{ estadoOpt }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('estado')?.hasError('required')">
+        El estado es requerido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width-dialog">
+      <mat-label>Asignar Conductor</mat-label>
+      <mat-select formControlName="conductorId" placeholder="Seleccione un conductor">
+        <mat-option [value]="null">-- Sin Asignar --</mat-option>
+        <mat-option *ngFor="let conductor of conductores" [value]="conductor.id">
+          {{ conductor.name }} (ID: {{ conductor.id }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end"> <button mat-stroked-button (click)="onNoClick()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()" [disabled]="!form.valid">Guardar Vehículo</button>
+</div>

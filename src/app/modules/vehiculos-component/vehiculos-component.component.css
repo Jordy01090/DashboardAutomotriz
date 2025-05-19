@@ -40,12 +40,17 @@ table {
 }
 
 .acciones-botones {
-  display: flex;
   justify-content: center;
-  gap: 12px;
   padding: 4px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 mat-form-field {
   width: 400px;
+}
+
+td.mat-column-acciones {
+  text-align: left;
 }

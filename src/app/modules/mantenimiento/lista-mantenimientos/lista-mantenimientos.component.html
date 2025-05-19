@@ -8,7 +8,31 @@
         Registrar Mantenimiento
       </button>
     </div>
-    <input class="fecha-busqueda-input" type="date" [(ngModel)]="busqueda" (input)="actualizarFiltro()" placeholder="Buscar por fecha" />    <div class="table-responsive">
+    <!--<input class="fecha-busqueda-input" type="date" [(ngModel)]="busqueda" (input)="actualizarFiltro()" placeholder="Buscar por fecha" />-->    <div class="table-responsive">
+      <div class="buscador">
+        <div class="filtros-fechas">
+          <mat-form-field appearance="fill">
+            <mat-label>Desde</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="fechaInicio" (dateChange)="filtrarPorFecha()" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        
+          <mat-form-field appearance="fill">
+            <mat-label>Hasta</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="fechaFin" (dateChange)="filtrarPorFecha()" />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      
+        <button class="filter-btn" mat-raised-button color="accent" (click)="limpiarFiltros()" title="Aplicar filtros">
+          Limpiar filtros
+        </button>
+      </div>
+        
+      
+      
       <table class="mantenimientos-table">
         <thead class="table-header">
           <tr>

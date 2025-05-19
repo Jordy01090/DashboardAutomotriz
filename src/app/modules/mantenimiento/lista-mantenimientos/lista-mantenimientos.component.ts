@@ -7,7 +7,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms'; 
 import { MatDialog } from '@angular/material/dialog';
-import { CrearMantenimientoComponent } from '../crear-mantenimiento/crear-mantenimiento.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+import { CrearMantenimientoComponent } from '../../../modals/crear-mantenimiento-dialog/crear-mantenimiento.component';
+import { NoRegistrosMantenimientoDialogComponent } from '@app/modals/no-registros-mantenimiento-dialog/no-registros-mantenimiento-dialog.component';
 
 @Component({
   selector: 'app-lista-mantenimientos',
@@ -15,7 +21,7 @@ import { CrearMantenimientoComponent } from '../crear-mantenimiento/crear-manten
     MatTableModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule, FormsModule],
+    MatIconModule, FormsModule,MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './lista-mantenimientos.component.html',
   styleUrls: ['./lista-mantenimientos.component.css']
 })
@@ -29,10 +35,10 @@ export class ListaMantenimientosComponent implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    const datosQuemados: Mantenimiento[] = [
+    /*const datosQuemados: Mantenimiento[] = [
       { id: 1, tipo: 'preventivo', descripcion: 'Cambio de aceite', fecha: new Date('2023-05-01'), costo: 100, kilometraje: 10000, vehiculoId: 5 },
       { id: 2, tipo: 'correctivo', descripcion: 'Reparación de frenos', fecha: new Date('2023-05-02'), costo: 250, kilometraje: 12000, vehiculoId: 3 },
-    ];
+    ];*/
 
     // Cargar mantenimientos desde localStorage
     const data = localStorage.getItem('mantenimientos');
@@ -43,12 +49,15 @@ export class ListaMantenimientosComponent implements OnInit {
         m.fecha = new Date(m.fecha);
       });
 
-      this.mantenimientos = [
+      /*this.mantenimientos = [
         ...mantenimientosGuardados,
         ...datosQuemados.filter(q => !mantenimientosGuardados.some((m: Mantenimiento) => m.id === q.id))
-      ];
+      ];*/
+
+      this.mantenimientos = mantenimientosGuardados;
     } else {
-      this.mantenimientos = [...datosQuemados];
+      /*this.mantenimientos = [...datosQuemados];*/
+      this.mantenimientos = [];
     }
 
     localStorage.setItem('mantenimientos', JSON.stringify(this.mantenimientos));
@@ -80,10 +89,13 @@ export class ListaMantenimientosComponent implements OnInit {
       width: '400px',
       data: { ...mantenimiento } // Pasar una copia del mantenimiento al modal
     });
-
+  
     dialogRef.afterClosed().subscribe((resultado) => {
       if (resultado) {
-        resultado.fecha = new Date(resultado.fecha);
+        const fecha = new Date(resultado.fecha);
+        fecha.setHours(0, 0, 0, 0); // Normalizar la fecha al inicio del día
+        resultado.fecha = fecha;
+  
         const index = this.mantenimientos.findIndex(m => m.id === resultado.id);
         if (index !== -1) {
           this.mantenimientos[index] = resultado;
@@ -93,18 +105,32 @@ export class ListaMantenimientosComponent implements OnInit {
       }
     });
   }
+  
 
   // Método para filtrar los registros por fecha
   actualizarFiltro(): void {
     if (this.busqueda) {
-      this.mantenimientosFiltrados = this.mantenimientos.filter(reg =>
-        reg.fecha instanceof Date && !isNaN(reg.fecha.getTime()) && reg.fecha.toISOString().split('T')[0] === this.busqueda
-      );
+      const fechaBusqueda = new Date(this.busqueda);
+      fechaBusqueda.setHours(0, 0, 0, 0); // Normalizar la fecha de búsqueda al inicio del día
+  
+      this.mantenimientosFiltrados = this.mantenimientos.filter(reg => {
+        const fechaRegistro = new Date(reg.fecha);
+        fechaRegistro.setHours(0, 0, 0, 0); // Normalizar la fecha del registro al inicio del día
+        return fechaRegistro.getTime() === fechaBusqueda.getTime();
+      });
+  
+      // Mostrar un modal si no hay resultados
+      if (this.mantenimientosFiltrados.length === 0) {
+        this.dialog.open(NoRegistrosMantenimientoDialogComponent, {
+          width: '300px',
+          data: { fecha: this.busqueda }
+        });
+        console.log('No hay registros para la fecha seleccionada:', this.busqueda);
+      }
     } else {
       this.mantenimientosFiltrados = [...this.mantenimientos];
     }
   }
-
   eliminarMantenimiento(id: number): void {
     const confirmacion = confirm('¿Estás seguro de que deseas eliminar este mantenimiento?');
     if (confirmacion) {
@@ -113,5 +139,44 @@ export class ListaMantenimientosComponent implements OnInit {
       localStorage.setItem('mantenimientos', JSON.stringify(this.mantenimientos));
     }
   }
+  fechaInicio: Date | null = null;
+  fechaFin: Date | null = null;
+  //fechaFin: Date | null = null;
+  filtrarPorFecha() {
+    console.log('Filtrando…');
+  
+    if (this.fechaInicio && this.fechaFin) {
+      const inicio = new Date(this.fechaInicio);
+      const fin = new Date(this.fechaFin);
+  
+      // Normaliza ambas fechas a medianoche
+      inicio.setHours(0, 0, 0, 0);
+      fin.setHours(23, 59, 59, 999); // Para incluir todo el día
+      
+      this.mantenimientosFiltrados = this.mantenimientos.filter(item => {
+        const fechaItem = new Date(item.fecha);
+        
+        return fechaItem >= inicio && fechaItem <= fin;
+      });
+      if (this.mantenimientosFiltrados.length === 0) {
+        this.dialog.open(NoRegistrosMantenimientoDialogComponent, {
+          width: '300px',
+          data: { fecha: this.busqueda }
+        });
+        console.log('No hay registros para la fecha seleccionada:', this.busqueda);
+      }
+      console.log(`Rango: ${inicio} → ${fin}`);
+      console.log('Filtrados:', this.mantenimientosFiltrados);
+    } else {
+      this.mantenimientosFiltrados = [...this.mantenimientos];
+      console.log('Fechas incompletas o vacías, mostrando todos los mantenimientos.');
+    }
+  }
+  limpiarFiltros(){
+    this.fechaInicio = null;
+    this.fechaFin = null;
+    this.filtrarPorFecha();
+   }
+  
 }
 

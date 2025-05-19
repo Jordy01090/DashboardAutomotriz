@@ -76,4 +76,20 @@
   outline: none;
 }
   
-  
+.filtros-fechas {
+  display: flex;
+  gap: 1rem; /* Espacio horizontal entre ellos (puedes usar px si prefieres: 16px) */
+  flex-wrap: wrap; /* Para que se acomoden en pantallas pequeñas */
+}
+
+.buscador{
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-btn {
+  display: flex;
+  justify-content: center;
+   /* Espacio horizontal entre ellos (puedes usar px si prefieres: 16px) */
+  flex-wrap: wrap; /* Para que se acomoden en pantallas pequeñas */
+}

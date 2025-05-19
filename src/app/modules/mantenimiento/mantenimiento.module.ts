@@ -5,6 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {MatNativeDateModule } from '@angular/material/core';
 
 import { ListaMantenimientosComponent } from './lista-mantenimientos/lista-mantenimientos.component'; // Ajusta ruta correcta
 
@@ -16,7 +17,7 @@ import { ListaMantenimientosComponent } from './lista-mantenimientos/lista-mante
     MatTableModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule, MatNativeDateModule
   ],
   exports: []
 })

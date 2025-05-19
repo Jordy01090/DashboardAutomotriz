@@ -1,12 +1,14 @@
 import { Component,Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Mantenimiento } from '../lista-mantenimientos/interfaces/lista'; // Ajusta la ruta correcta
+import { Mantenimiento } from '../../modules/mantenimiento/lista-mantenimientos/interfaces/lista'; // Ajusta la ruta correcta
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-crear-mantenimiento',
@@ -15,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
    // BrowserAnimationsModule, // Required for Angular Material
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule],
+    MatButtonModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './crear-mantenimiento.component.html',
   styleUrl: './crear-mantenimiento.component.css'
 })
@@ -42,9 +44,13 @@ export class CrearMantenimientoComponent implements OnInit {
   ngOnInit(): void {}
 
   guardar(): void {
-    this.mantenimiento.fecha = new Date(this.mantenimiento.fecha); 
-    this.dialogRef.close(this.mantenimiento); // Devuelve los datos al componente principal
-  }
+  const fecha = new Date(this.mantenimiento.fecha);
+  fecha.setHours(0, 0, 0, 0); // Normalizar la fecha al inicio del día
+  this.mantenimiento.fecha = fecha;
+
+  console.log(this.mantenimiento);
+  this.dialogRef.close(this.mantenimiento); // Devuelve los datos al componente principal
+}
 
   cancelar(): void {
     this.dialogRef.close(); // Cierra el modal sin guardar cambios

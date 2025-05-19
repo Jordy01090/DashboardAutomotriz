@@ -9,10 +9,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { IVehiculo } from '@app/interface/IVehiculo';
 import { Driver } from '@app/modules/drivers-component/interfaces/driver';
 import { DriversService } from '@services/drivers.service';
-import { estadosVehiculo, tiposDeCarga } from '../crear-vehiculo-dialog/crear-vehiculo-dialog.component';
+export const estadosVehiculo: string[] = ['Activo', 'Inactivo', 'Mantenimiento', 'De Baja'];
+export const tiposDeCarga: string[] = ['Ligera', 'Mediana', 'Pesada', 'Extra Pesada', 'Especializada', 'Pasajeros'];
 
 @Component({
-  selector: 'app-editar-vehiculo-dialog',
+  selector: 'app-crear-vehiculo-dialog',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,28 +24,28 @@ import { estadosVehiculo, tiposDeCarga } from '../crear-vehiculo-dialog/crear-ve
     MatButtonModule,
     MatSelectModule
   ],
-  templateUrl: './editar-vehiculo-dialog.component.html',
-  styleUrls: ['./editar-vehiculo-dialog.component.css']
+  templateUrl: './crear-vehiculo-dialog.component.html',
+  styleUrls: ['./crear-vehiculo-dialog.component.css']
 })
-export class EditarVehiculoDialogComponent implements OnInit {
+export class CrearVehiculoDialogComponent implements OnInit {
   form: FormGroup;
   conductores: Driver[] = [];
   estadosVehiculo = estadosVehiculo;
   tiposDeCarga = tiposDeCarga;
 
   constructor(
-    public dialogRef: MatDialogRef<EditarVehiculoDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IVehiculo,
+    public dialogRef: MatDialogRef<CrearVehiculoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: null,
     private fb: FormBuilder,
     private driversService: DriversService
   ) {
     this.form = this.fb.group({
-      placa: [this.data.placa, Validators.required],
-      modelo: [this.data.modelo, Validators.required],
-      anio: [this.data.anio, [Validators.required, Validators.min(1900), Validators.max(new Date().getFullYear() + 1)]],
-      tipoCarga: [this.data.tipoCarga],
-      estado: [this.data.estado, Validators.required],
-      conductorId: [this.data.conductorId || null]
+      placa: ['', Validators.required],
+      modelo: ['', Validators.required],
+      anio: [2000, [Validators.required, Validators.min(1900), Validators.max(new Date().getFullYear() + 1)]],
+      tipoCarga: [''],
+      estado: ['', Validators.required],
+      conductorId: [null]
     });
   }
 
@@ -66,8 +67,7 @@ export class EditarVehiculoDialogComponent implements OnInit {
         nombreConductorSeleccionado = conductorEncontrado ? conductorEncontrado.name : null;
       }
 
-      const vehiculoResultado: IVehiculo = {
-        id: this.data.id,
+      const vehiculoResultado: Partial<IVehiculo> = {
         placa: formData.placa,
         modelo: formData.modelo,
         anio: formData.anio,

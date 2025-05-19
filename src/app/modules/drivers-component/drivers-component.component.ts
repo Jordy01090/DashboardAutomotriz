@@ -52,7 +52,6 @@ export class DriversComponentComponent implements OnInit {
 
   private parseDriver(data:any):Driver{
     return {
-
       id:data.id,
       name:data.name,
       license:{

@@ -6,6 +6,7 @@ import { MatButtonModule }       from '@angular/material/button';
 import { MatIconModule }         from '@angular/material/icon';
 import { AutorizacionService }   from '../services/autorizacion.service';
 import { Router }                from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-cabecera',
@@ -14,7 +15,7 @@ import { Router }                from '@angular/router';
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,HttpClientModule      
   ],
   templateUrl: './cabecera.component.html',
   styleUrls: ['./cabecera.component.css']
